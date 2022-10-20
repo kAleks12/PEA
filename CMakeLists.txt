@@ -3,4 +3,4 @@ project(pea)
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_executable(pea main.cpp)
+add_executable(pea main.cpp inc/AdjacencyMatrix.h src/AdjacencyMatrix.cpp)
