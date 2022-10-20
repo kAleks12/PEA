@@ -4,7 +4,7 @@
 
 
 #include <iostream>
-#include "../inc/AdjacencyMatrix.h"
+#include "../../inc/containers/AdjacencyMatrix.h"
 
 AdjacencyMatrix::AdjacencyMatrix(const AdjacencyMatrix &existingMatrix) {
     citiesNumber = existingMatrix.citiesNumber;

@@ -3,4 +3,12 @@ project(pea)
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_executable(pea main.cpp inc/AdjacencyMatrix.h src/AdjacencyMatrix.cpp)
+add_executable(
+        pea main.cpp
+
+        inc/containers/AdjacencyMatrix.h
+        src/containers/AdjacencyMatrix.cpp
+
+        inc/containers/DynamicArray.hpp
+        src/containers/DynamicArray.tpp
+)
