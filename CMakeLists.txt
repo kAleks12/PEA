@@ -4,11 +4,21 @@ project(pea)
 set(CMAKE_CXX_STANDARD 23)
 
 add_executable(
-        pea main.cpp
+        pea src/main.cpp
 
         inc/containers/AdjacencyMatrix.h
         src/containers/AdjacencyMatrix.cpp
 
         inc/containers/DynamicArray.hpp
         src/containers/DynamicArray.tpp
-)
+
+        inc/algorithms/Algorithm.h
+
+        inc/utils/Timer.h
+
+        inc/containers/DynamicArray.hpp
+        src/containers/DynamicArray.tpp
+
+        inc/containers/Path.h
+        src/containers/Path.cpp
+        src/utils/Timer.cpp)
