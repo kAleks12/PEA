@@ -13,8 +13,8 @@ AdjacencyMatrix::AdjacencyMatrix(const AdjacencyMatrix &existingMatrix) {
     copy(existingMatrix.getMatrix());
 }
 
-AdjacencyMatrix::AdjacencyMatrix(const size_t &citiesNumber, const int *edges) {
-    this->citiesNumber = citiesNumber;
+AdjacencyMatrix::AdjacencyMatrix(const size_t &verticesNumber, const int *edges) {
+    this->citiesNumber = verticesNumber;
     allocate();
     initialize(edges);
 }

@@ -14,13 +14,13 @@ class AdjacencyMatrix
     void allocate();
     void deallocate();
 
-    void initialize(const int* data_);
-    void copy(int** dataFromOrigin_);
+    void initialize(const int* edges);
+    void copy(int** existingMatrix);
 
 public:
 
-    AdjacencyMatrix(const size_t & citiesNumber_, const int* data_);
-    AdjacencyMatrix(const AdjacencyMatrix & origin_);
+    AdjacencyMatrix(const size_t & verticesNumber, const int* edges);
+    AdjacencyMatrix(const AdjacencyMatrix & existingMatrix);
     ~AdjacencyMatrix();
 
     void print();
