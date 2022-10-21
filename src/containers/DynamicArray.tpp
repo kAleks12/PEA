@@ -125,3 +125,6 @@ T DynamicArray<T>::at(int index) {
     }
     return *(this->head + index);
 }
+
+template class DynamicArray<int>;
+template class DynamicArray<size_t>;

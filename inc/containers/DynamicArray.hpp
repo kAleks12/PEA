@@ -32,5 +32,3 @@ public:
         return  this->size;
     }
 };
-
-#include "../../src/containers/DynamicArray.tpp"
