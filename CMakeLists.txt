@@ -26,4 +26,4 @@ add_executable(
         inc/algorithms/BruteForce.h
         src/algorithms/BruteForce.cpp
 
-        inc/utils/TimeUnit.h)
+        inc/utils/TimeUnit.h inc/utils/FileManager.h src/utils/FileManager.cpp)
