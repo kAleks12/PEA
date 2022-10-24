@@ -21,4 +21,9 @@ add_executable(
 
         inc/containers/Path.h
         src/containers/Path.cpp
-        src/utils/Timer.cpp)
+        src/utils/Timer.cpp
+
+        inc/algorithms/BruteForce.h
+        src/algorithms/BruteForce.cpp
+
+        inc/utils/TimeUnit.h)
