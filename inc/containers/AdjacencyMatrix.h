@@ -30,9 +30,9 @@ public:
         return this->matrix;
     }
 
-    int getValue(const size_t & source_, const size_t & destination_) const
+    int getCost(const size_t & origin, const size_t & destination) const
     {
-        return this->matrix[source_][destination_];
+        return this->matrix[origin][destination];
     }
 
     size_t getCitiesNumber() const
