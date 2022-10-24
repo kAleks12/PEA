@@ -32,7 +32,7 @@ double Timer::getTime(TimeUnit unit) {
             break;
 
         default:
-            throw std::runtime_error("Tried using unsupported time unit!")
+            throw std::runtime_error("Tried using unsupported time unit!");
     }
 
 }
