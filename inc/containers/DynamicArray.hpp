@@ -21,14 +21,16 @@ public:
 
     T &operator[](const size_t &index); //Overload of [] operator
 
-    T at(int index);
+    T* begin();
+    T* end();
+    T at(int index) const;
     void addBack(const T &val); //Add val at the end of the table
     void addFront(const T &val); //Add val at the beginning of the table
     void removeBack(); //Remove element from the end of the table
     void removeFront(); //Remove element from the front of the table
 
     //Return curr size of the table
-    int getSize(){
+    int getSize() const {
         return  this->size;
     }
 };

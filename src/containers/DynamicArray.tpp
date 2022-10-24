@@ -33,7 +33,6 @@ T &DynamicArray<T>::operator[](const size_t &index) {
 }
 
 
-
 template<typename T>
 void DynamicArray<T>::addBack(const T &val) {
     //Creating new head
@@ -119,12 +118,26 @@ void DynamicArray<T>::removeFront() {
 }
 
 template<typename T>
-T DynamicArray<T>::at(int index) {
-    if(index > this->size || index < 0) {
+T DynamicArray<T>::at(int index) const {
+    if (index > this->size || index < 0) {
         throw std::invalid_argument("Index out of bounds!");
     }
     return *(this->head + index);
 }
 
-template class DynamicArray<int>;
-template class DynamicArray<size_t>;
+template<typename T>
+T *DynamicArray<T>::begin() {
+    return head;
+}
+
+
+template<typename T>
+T *DynamicArray<T>::end() {
+    return head + size;
+}
+
+template
+class DynamicArray<int>;
+
+template
+class DynamicArray<size_t>;
