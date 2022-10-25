@@ -75,16 +75,14 @@ void AdjacencyMatrix::copy(int **existingMatrix) {
 }
 
 void AdjacencyMatrix::print() {
-    std::cout << "Adjacency matrix:";
+    std::cout << "Adjacency matrix:\n";
 
     for(int rowsIterator = 0; rowsIterator < this->citiesNumber; ++rowsIterator)
     {
-        std::cout << "\n";
-
         for(int columnIterator = 0; columnIterator < this->citiesNumber; ++columnIterator)
         {
-            std::cout << "| " << this->matrix[rowsIterator][columnIterator] << " ";
-        }\
+            std::cout << "| " << matrix[rowsIterator][columnIterator] << " ";
+        }
 
         std::cout << "|\n";
     }
