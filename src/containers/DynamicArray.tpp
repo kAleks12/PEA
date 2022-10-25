@@ -136,6 +136,30 @@ T *DynamicArray<T>::end() {
     return head + size;
 }
 
+template<typename T>
+DynamicArray<T>::DynamicArray(const DynamicArray<T> &existingArray): size(existingArray.size) {
+    head = new T[size];
+
+    for (int i = 0; i < size; i++) {
+        head[i] = existingArray.head[i];
+    }
+}
+
+template<typename T>
+void DynamicArray<T>::print() {
+    std::cout << "Array body: \n( ";
+
+    for (int i = 0; i < this->size; i++) {
+        if(i == size - 1) {
+            std::cout << head[i];
+            continue;
+        }
+
+        std::cout << head[i] << ", ";
+    }
+    std::cout << " )\n";
+}
+
 template
 class DynamicArray<int>;
 
