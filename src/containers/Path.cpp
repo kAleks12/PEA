@@ -8,7 +8,7 @@
 // Created by kacpe on 21.10.2022.
 Path::Path() {
     path = new DynamicArray<int>();
-    cost = LONG_MAX;
+    cost = 0;
 }
 
 Path::Path(const DynamicArray<int> & vertices, int cost) : cost(cost) {
@@ -22,6 +22,10 @@ Path::Path(const DynamicArray<int> & vertices, int cost) : cost(cost) {
 void Path::addVertex(int vertex, int vertexCost) {
     path->addBack(vertex);
     cost += vertexCost;
+}
+
+void Path::addVertex(int vertex) {
+    path->addBack(vertex);
 }
 
 void Path::setCost(int totalCost) {
@@ -42,4 +46,8 @@ std::string Path::toString() {
             .append(std::to_string(cost));
 
     return path_str;
+}
+
+Path::~Path() {
+    delete path;
 }

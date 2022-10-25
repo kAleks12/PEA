@@ -14,8 +14,10 @@ class Path {
 public:
     Path(const DynamicArray<int> & vertices, int cost);
     Path();
+    ~Path();
 
     void addVertex(int vertex, int vertexCost);
+    void addVertex(int vertex);
     void setCost(int totalCost);
 
     std::string toString();
