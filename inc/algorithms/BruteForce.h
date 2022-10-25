@@ -9,12 +9,14 @@
 class BruteForce : public Algorithm {
 private:
     DynamicArray<int> permutationBuffer;
-    Path optimalPath;
+    DynamicArray<int>* optimalPath = nullptr;
+    int optimalCost;
 
-    void fillBuffer(size_t verticesNumber, size_t initialVertex);
+    void fillBuffer(size_t verticesNumber);
     int calculateCost(const AdjacencyMatrix &matrix);
+    void reassignOptimalValues(int newOptimaCost);
 
 public:
-    Path execute(const AdjacencyMatrix &graph, int initialVertex) override;
-    void testExecute(const AdjacencyMatrix &graph, int initialVertex) override;
+    Path* execute(AdjacencyMatrix &graph, int initialVertex) override;
+    void testExecute(AdjacencyMatrix &graph, int initialVertex) override;
 };

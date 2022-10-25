@@ -4,37 +4,64 @@
 #include <algorithm>
 #include "../../inc/algorithms/BruteForce.h"
 
-void BruteForce::fillBuffer(size_t verticesNumber, size_t initialVertex) {
+void BruteForce::fillBuffer(size_t verticesNumber) {
     for(int index = 0; index < verticesNumber; ++index)
     {
         permutationBuffer.addBack(index);
     }
+
+    optimalCost = INT32_MAX;
 }
 
 int BruteForce::calculateCost(const AdjacencyMatrix &matrix) {
     int totalCost = 0;
+    auto lastIndex = permutationBuffer.getSize() - 1;
 
-    for(int index = 0; index < permutationBuffer.getSize() - 1; index++) {
+    for(int index = 0; index < lastIndex; index++) {
         totalCost += matrix.getCost(permutationBuffer[index], permutationBuffer[index + 1]);
     }
+
+    totalCost += matrix.getCost(permutationBuffer[lastIndex], permutationBuffer[0]);
 
     return totalCost;
 }
 
-Path BruteForce::execute(const AdjacencyMatrix &graph, int initialVertex) {
-    testExecute(graph, initialVertex);
+void BruteForce::reassignOptimalValues(int newOptimaCost) {
+    delete optimalPath;
+    optimalPath = new DynamicArray<int>;
 
-    return optimalPath;
+    for(int i= 0; i < permutationBuffer.getSize(); i++) {
+        optimalPath->addBack(permutationBuffer.at(i));
+    }
+    optimalPath->addBack(0);
+
+    optimalCost = newOptimaCost;
 }
 
-void BruteForce::testExecute(const AdjacencyMatrix &graph, int initialVertex) {
-    fillBuffer(graph.getCitiesNumber(), 0);
+Path* BruteForce::execute(AdjacencyMatrix &graph, int initialVertex) {
+    fillBuffer(graph.getCitiesNumber());
 
     do {
         auto currentCost = calculateCost(graph);
 
-        if(currentCost < optimalPath.getCost()) {
-            optimalPath = Path(permutationBuffer, currentCost);
+        if(currentCost < optimalCost) {
+            reassignOptimalValues(currentCost);
+        }
+    } while (std::next_permutation(permutationBuffer.begin(), permutationBuffer.end()));
+
+    return new Path(*optimalPath, optimalCost);
+}
+
+void BruteForce::testExecute(AdjacencyMatrix &graph, int initialVertex) {
+    fillBuffer(graph.getCitiesNumber());
+
+    do {
+        auto currentCost = calculateCost(graph);
+
+        if(currentCost < optimalCost) {
+            if(currentCost < optimalCost) {
+                reassignOptimalValues(currentCost);
+            }
         }
     } while (std::next_permutation(permutationBuffer.begin(), permutationBuffer.end()));
 }
