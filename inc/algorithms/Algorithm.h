@@ -9,6 +9,6 @@
 #include "../containers/Path.h"
 
 class Algorithm {
-    virtual Path execute(const AdjacencyMatrix &graph, int initialVertex) = 0;
-    virtual void testExecute(const AdjacencyMatrix &graph, int initialVertex) = 0;
+    virtual Path* execute(AdjacencyMatrix &graph, int initialVertex) = 0;
+    virtual void testExecute(AdjacencyMatrix &graph, int initialVertex) = 0;
 };
