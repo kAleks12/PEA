@@ -176,8 +176,6 @@ Path* BandB::createResultPath() {
     result->addVertex(optimalPath[instanceSize]);
     result->setCost(optimalCost);
 
-    auto rel = result->toString();
-
     return result;
 }
 
