@@ -3,10 +3,10 @@
 //
 
 #include <cstring>
-#include "../../inc/algorithms/BandB.h"
+#include "../../inc/algorithms/BranchAndBound.h"
 
 
-void BandB::setupVariables(const AdjacencyMatrix &graph) {
+void BranchAndBound::setupVariables(const AdjacencyMatrix &graph) {
     instanceSize = graph.getCitiesNumber();
 
     currPath = new int[graph.getCitiesNumber() + 1];
@@ -19,7 +19,7 @@ void BandB::setupVariables(const AdjacencyMatrix &graph) {
     memset(visited, false, instanceSize);
 }
 
-Path* BandB::execute(AdjacencyMatrix &graph, int initialVertex) {
+Path* BranchAndBound::execute(AdjacencyMatrix &graph, int initialVertex) {
     setupVariables(graph);
 
     // Compute initial bound
@@ -42,7 +42,7 @@ Path* BandB::execute(AdjacencyMatrix &graph, int initialVertex) {
     return createResultPath();
 }
 
-void BandB::testExecute(AdjacencyMatrix &graph, int initialVertex) {
+void BranchAndBound::testExecute(AdjacencyMatrix &graph, int initialVertex) {
     setupVariables(graph);
 
     // Compute initial bound
@@ -65,7 +65,7 @@ void BandB::testExecute(AdjacencyMatrix &graph, int initialVertex) {
 
 }
 
-void BandB::copyToFinal() {
+void BranchAndBound::copyToFinal() {
     for (int i = 0; i < instanceSize; i++) {
         optimalPath[i] = currPath[i];
     }
@@ -74,7 +74,7 @@ void BandB::copyToFinal() {
 
 // Function to find the minimum edge cost
 // having an end at the vertex i
-int BandB::firstMin(AdjacencyMatrix &graph, int i) {
+int BranchAndBound::firstMin(AdjacencyMatrix &graph, int i) {
     int min = INT_MAX;
     for (int k = 0; k < graph.getCitiesNumber(); k++)
         if (graph.getCost(i, k) < min && i != k)
@@ -84,7 +84,7 @@ int BandB::firstMin(AdjacencyMatrix &graph, int i) {
 
 // function to find the second minimum edge cost
 // having an end at the vertex i
-int BandB::secondMin(AdjacencyMatrix &graph, int i) {
+int BranchAndBound::secondMin(AdjacencyMatrix &graph, int i) {
     int first = INT_MAX, second = INT_MAX;
     for (int j = 0; j < graph.getCitiesNumber(); j++) {
         if (i == j)
@@ -100,7 +100,7 @@ int BandB::secondMin(AdjacencyMatrix &graph, int i) {
     return second;
 }
 
-void BandB::TSPRec(AdjacencyMatrix &graph, int currWeight, int level) {
+void BranchAndBound::TSPRec(AdjacencyMatrix &graph, int currWeight, int level) {
     // base case is when we have reached level N which
     // means we have covered all the nodes once
     if (level == instanceSize) {
@@ -168,7 +168,7 @@ void BandB::TSPRec(AdjacencyMatrix &graph, int currWeight, int level) {
     }
 }
 
-Path* BandB::createResultPath() {
+Path* BranchAndBound::createResultPath() {
     Path* result = new Path;
     for (int i = 0; i < instanceSize; i++) {
         result->addVertex(optimalPath[i]);

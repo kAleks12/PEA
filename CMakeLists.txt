@@ -12,27 +12,24 @@ add_executable(
         inc/containers/DynamicArray.hpp
         src/containers/DynamicArray.tpp
 
-        inc/algorithms/Algorithm.h
-
-        inc/utils/Timer.h
-
-        inc/containers/DynamicArray.hpp
-        src/containers/DynamicArray.tpp
-
         inc/containers/Path.h
         src/containers/Path.cpp
-        src/utils/Timer.cpp
-
-        inc/algorithms/BruteForce.h
-        src/algorithms/BruteForce.cpp
 
         inc/utils/TimeUnit.h
+        inc/utils/Timer.h
+        src/utils/Timer.cpp
 
         inc/utils/FileManager.h
         src/utils/FileManager.cpp
 
-        inc/algorithms/BandB.h
-        src/algorithms/BandB.cpp
+        inc/algorithms/Algorithm.h
 
-        src/BB.cpp
+        inc/algorithms/BruteForce.h
+        src/algorithms/BruteForce.cpp
+
+        inc/algorithms/BranchAndBound.h
+        src/algorithms/BranchAndBound.cpp
+
+        inc/algorithms/DynamicProgramming.h
+        src/algorithms/DynamicProgramming.cpp
 )

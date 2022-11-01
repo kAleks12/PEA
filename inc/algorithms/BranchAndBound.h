@@ -6,7 +6,7 @@
 
 #include "Algorithm.h"
 
-class BandB : public Algorithm {
+class BranchAndBound : public Algorithm {
 private:
     size_t instanceSize{};
 
