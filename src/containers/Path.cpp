@@ -3,9 +3,9 @@
 
 
 //
-
-//
 // Created by kacpe on 21.10.2022.
+//
+
 Path::Path() {
     path = new DynamicArray<int>();
     cost = 0;
@@ -17,6 +17,10 @@ Path::Path(const DynamicArray<int> & vertices, int cost) : cost(cost) {
     for (int index = 0; index < vertices.getSize() ; ++index) {
         path->addBack(vertices.at(index));
     }
+}
+
+Path::~Path() {
+    delete path;
 }
 
 void Path::addVertex(int vertex, int vertexCost) {
@@ -46,8 +50,4 @@ std::string Path::toString() {
             .append(std::to_string(cost));
 
     return path_str;
-}
-
-Path::~Path() {
-    delete path;
 }

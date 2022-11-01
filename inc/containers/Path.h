@@ -8,6 +8,7 @@
 #include "DynamicArray.hpp"
 
 class Path {
+private:
     DynamicArray<int>* path;
     int cost;
 
