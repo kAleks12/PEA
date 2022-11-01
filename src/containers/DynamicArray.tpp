@@ -15,6 +15,15 @@ DynamicArray<T>::DynamicArray() {
 }
 
 template<typename T>
+DynamicArray<T>::DynamicArray(const DynamicArray<T> &existingArray): size(existingArray.size) {
+    head = new T[size];
+
+    for (int i = 0; i < size; i++) {
+        head[i] = existingArray.head[i];
+    }
+}
+
+template<typename T>
 DynamicArray<T>::~DynamicArray() {
     //Deleting head if it exists
     if (this->head != nullptr) {
@@ -74,6 +83,7 @@ void DynamicArray<T>::addFront(const T &val) {
     this->head = newHead;
     this->size++;
 }
+
 
 template<typename T>
 void DynamicArray<T>::removeBack() {
@@ -136,14 +146,6 @@ T *DynamicArray<T>::end() {
     return head + size;
 }
 
-template<typename T>
-DynamicArray<T>::DynamicArray(const DynamicArray<T> &existingArray): size(existingArray.size) {
-    head = new T[size];
-
-    for (int i = 0; i < size; i++) {
-        head[i] = existingArray.head[i];
-    }
-}
 
 template<typename T>
 void DynamicArray<T>::print() {
@@ -158,6 +160,14 @@ void DynamicArray<T>::print() {
         std::cout << head[i] << ", ";
     }
     std::cout << " )\n";
+}
+
+template<typename T>
+void DynamicArray<T>::clear() {
+    delete[] head;
+
+    this->head = new T[0];
+    this->size = 0;
 }
 
 template
