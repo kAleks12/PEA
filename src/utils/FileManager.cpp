@@ -17,7 +17,6 @@ void FileManager::readData(const std::string &fileName) {
 
     //Checking whether file exists
     if (!srcFile.is_open()) {
-        std::cout << "File not found\n\n";
         return;
     }
 
