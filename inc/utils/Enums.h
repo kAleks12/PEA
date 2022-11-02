@@ -9,3 +9,9 @@ enum TimeUnit {
     MILLISECONDS,
     MICROSECONDS
 };
+
+enum Algorithms {
+    BF,
+    DP,
+    BB
+};
