@@ -5,7 +5,7 @@
 #include "../../inc/algorithms/DynamicProgramming.h"
 #include <cmath>
 
-Path *DynamicProgramming::execute(AdjacencyMatrix &graph, int initialVertex) {
+Path *DynamicProgramming::execute(AdjacencyMatrix &graph) {
 
     setupVariables(graph);
     Result result = TSP(graph, 0, 1);
@@ -16,7 +16,7 @@ Path *DynamicProgramming::execute(AdjacencyMatrix &graph, int initialVertex) {
     return path;
 }
 
-void DynamicProgramming::testExecute(AdjacencyMatrix &graph, int initialVertex) {
+void DynamicProgramming::testExecute(AdjacencyMatrix &graph) {
     setupVariables(graph);
     Result result = TSP(graph, 0, 1);
     resetState();

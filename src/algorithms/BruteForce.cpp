@@ -27,18 +27,17 @@ int BruteForce::calculateCost(const AdjacencyMatrix &matrix) {
 }
 
 void BruteForce::reassignOptimalValues(int newOptimaCost) {
-    delete optimalPath;
-    optimalPath = new DynamicArray<int>;
+    optimalPath.clear();
 
     for(int i= 0; i < permutationBuffer.getSize(); i++) {
-        optimalPath->addBack(permutationBuffer.at(i));
+        optimalPath.addBack(permutationBuffer.at(i));
     }
-    optimalPath->addBack(0);
+    optimalPath.addBack(0);
 
     optimalCost = newOptimaCost;
 }
 
-Path* BruteForce::execute(AdjacencyMatrix &graph, int initialVertex) {
+Path* BruteForce::execute(AdjacencyMatrix &graph) {
     fillBuffer(graph.getCitiesNumber());
 
     do {
@@ -47,12 +46,12 @@ Path* BruteForce::execute(AdjacencyMatrix &graph, int initialVertex) {
         if(currentCost < optimalCost) {
             reassignOptimalValues(currentCost);
         }
-    } while (std::next_permutation(permutationBuffer.begin(), permutationBuffer.end()));
+    } while (std::next_permutation(permutationBuffer.begin() + 1, permutationBuffer.end()));
 
-    return new Path(*optimalPath, optimalCost);
+    return new Path(optimalPath, optimalCost);
 }
 
-void BruteForce::testExecute(AdjacencyMatrix &graph, int initialVertex) {
+void BruteForce::testExecute(AdjacencyMatrix &graph) {
     fillBuffer(graph.getCitiesNumber());
 
     do {
@@ -63,5 +62,5 @@ void BruteForce::testExecute(AdjacencyMatrix &graph, int initialVertex) {
                 reassignOptimalValues(currentCost);
             }
         }
-    } while (std::next_permutation(permutationBuffer.begin(), permutationBuffer.end()));
+    } while (std::next_permutation(permutationBuffer.begin() + 1, permutationBuffer.end()));
 }

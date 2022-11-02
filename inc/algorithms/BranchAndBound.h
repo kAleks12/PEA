@@ -27,6 +27,6 @@ private:
     Path* createResultPath();
 
 public:
-    Path* execute(AdjacencyMatrix &graph, int initialVertex) override;
-    void testExecute(AdjacencyMatrix &graph, int initialVertex) override;
+    Path* execute(AdjacencyMatrix &graph) override;
+    void testExecute(AdjacencyMatrix &graph) override;
 };

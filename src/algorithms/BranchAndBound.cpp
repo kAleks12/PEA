@@ -25,7 +25,7 @@ void BranchAndBound::resetVariables() {
     delete[] optimalPath;
 }
 
-Path* BranchAndBound::execute(AdjacencyMatrix &graph, int initialVertex) {
+Path* BranchAndBound::execute(AdjacencyMatrix &graph) {
     setupVariables(graph);
 
     // Compute initial bound
@@ -51,7 +51,7 @@ Path* BranchAndBound::execute(AdjacencyMatrix &graph, int initialVertex) {
     return resultPath;
 }
 
-void BranchAndBound::testExecute(AdjacencyMatrix &graph, int initialVertex) {
+void BranchAndBound::testExecute(AdjacencyMatrix &graph) {
     setupVariables(graph);
 
     // Compute initial bound
