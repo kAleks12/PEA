@@ -15,7 +15,11 @@ add_executable(
         inc/containers/Path.h
         src/containers/Path.cpp
 
-        inc/utils/TimeUnit.h
+        inc/utils/Enums.h
+
+        inc/utils/Menu.h
+        src/utils/Menu.cpp
+
         inc/utils/Timer.h
         src/utils/Timer.cpp
 

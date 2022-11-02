@@ -5,7 +5,7 @@
 #pragma once
 
 #include <chrono>
-#include "TimeUnit.h"
+#include "Enums.h"
 
 class clock;
 
