@@ -19,6 +19,12 @@ void BranchAndBound::setupVariables(const AdjacencyMatrix &graph) {
     memset(visited, false, instanceSize);
 }
 
+void BranchAndBound::resetVariables() {
+    delete[] currPath;
+    delete[] visited;
+    delete[] optimalPath;
+}
+
 Path* BranchAndBound::execute(AdjacencyMatrix &graph, int initialVertex) {
     setupVariables(graph);
 
@@ -39,7 +45,10 @@ Path* BranchAndBound::execute(AdjacencyMatrix &graph, int initialVertex) {
     // 0 and level 1
     TSPRec(graph, 0, 1);
 
-    return createResultPath();
+    auto resultPath = createResultPath();
+    resetVariables();
+
+    return resultPath;
 }
 
 void BranchAndBound::testExecute(AdjacencyMatrix &graph, int initialVertex) {
@@ -62,7 +71,7 @@ void BranchAndBound::testExecute(AdjacencyMatrix &graph, int initialVertex) {
     // 0 and level 1
     TSPRec(graph, 0, 1);
 
-
+    resetVariables();
 }
 
 void BranchAndBound::copyToFinal() {
@@ -178,4 +187,3 @@ Path* BranchAndBound::createResultPath() {
 
     return result;
 }
-

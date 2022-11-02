@@ -21,6 +21,7 @@ private:
     static int secondMin(AdjacencyMatrix &graph, int vertex);
 
     void setupVariables(const AdjacencyMatrix &graph);
+    void resetVariables();
     void copyToFinal();
     void TSPRec(AdjacencyMatrix &graph, int currWeight, int level);
     Path* createResultPath();
