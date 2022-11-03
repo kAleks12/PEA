@@ -26,6 +26,9 @@ add_executable(
         inc/utils/FileManager.h
         src/utils/FileManager.cpp
 
+        inc/utils/MatrixGenerator.h
+        src/utils/MatrixGenerator.cpp
+
         inc/algorithms/Algorithm.h
 
         inc/algorithms/BruteForce.h
