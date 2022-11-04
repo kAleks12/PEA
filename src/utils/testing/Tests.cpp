@@ -60,7 +60,7 @@ void Tests::test() {
     DynamicProgramming dpEntity;
 
     //Testing 7 different instanceSizes
-    for (int vertices = 6; vertices <= 12; vertices++) {
+    for (int vertices = 5; vertices <= 12; vertices++) {
         //100 times
         for (int i = 0; i < sampleSize; ++i) {
             //Generating new graph represented by matrix
@@ -94,18 +94,23 @@ void Tests::test() {
         dpIntervals.clear();
         bfIntervals.clear();
 
-        std::cout << "Done instance size -  " << vertices << "\n\n";
+        std::cout << "Done instance size -  " << vertices << "\n";
+
+        if (vertices == 5) {
+            vertices++;
+        }
     }
-        //Saving results of all algorithms for current vertices number
+
+    //Saving results of all algorithms for current vertices number
     saveResultList("brute_force", Algorithms::BF);
     saveResultList("branch_and_bound", Algorithms::BB);
     saveResultList("dynamic_programming", Algorithms::DP);
 
 
-        //Clearing results for next vertices number
-        dpResults.clear();
-        bbResults.clear();
-        bfResults.clear();
+    //Clearing results for next vertices number
+    dpResults.clear();
+    bbResults.clear();
+    bfResults.clear();
 }
 
 //Functions that saves measurements for a single algorithm to .txt file
