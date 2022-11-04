@@ -20,14 +20,17 @@ add_executable(
         inc/utils/Menu.h
         src/utils/Menu.cpp
 
-        inc/utils/Timer.h
-        src/utils/Timer.cpp
+        inc/utils/testing/Timer.h
+        src/utils/testing/Timer.cpp
 
         inc/utils/FileManager.h
         src/utils/FileManager.cpp
 
-        inc/utils/MatrixGenerator.h
-        src/utils/MatrixGenerator.cpp
+        inc/utils/testing/MatrixGenerator.h
+        src/utils/testing/MatrixGenerator.cpp
+
+        inc/utils/testing/Tests.h
+        src/utils/testing/Tests.cpp
 
         inc/algorithms/Algorithm.h
 
@@ -39,4 +42,5 @@ add_executable(
 
         inc/algorithms/DynamicProgramming.h
         src/algorithms/DynamicProgramming.cpp
+
 )
