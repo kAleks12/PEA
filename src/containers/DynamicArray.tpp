@@ -35,7 +35,8 @@ template<typename T>
 T &DynamicArray<T>::operator[](const size_t &index) {
     //Checking whether index is in bounds of array
     if (index > this->size) {
-        throw std::out_of_range("Out of range exception!");
+         throw std::invalid_argument("Index out of bounds!");
+        std::string errorMsg = "Index " + std::to_string(index) +  " out of bounds!";
     }
 
     return *(this->head + index);
@@ -130,7 +131,8 @@ void DynamicArray<T>::removeFront() {
 template<typename T>
 T DynamicArray<T>::at(int index) const {
     if (index > this->size || index < 0) {
-        throw std::invalid_argument("Index out of bounds!");
+        std::string errorMsg = "Index " + std::to_string(index) +  " out of bounds!";
+        throw std::invalid_argument(errorMsg);
     }
     return *(this->head + index);
 }
