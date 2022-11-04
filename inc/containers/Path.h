@@ -1,5 +1,5 @@
 //
-// Created by kacpe on 21.10.2022.
+// Created by kacper on 21.10.2022.
 //
 
 #pragma once
@@ -8,7 +8,7 @@
 #include "DynamicArray.hpp"
 
 class Path {
-private:
+    //Class variables
     DynamicArray<int>* path;
     int cost;
 
@@ -17,13 +17,9 @@ public:
     Path();
     ~Path();
 
-    void addVertex(int vertex, int vertexCost);
+    void addVertex(int vertex, int vertexCost); //adds vertex to path and updates cost with vertexCost
     void addVertex(int vertex);
     void setCost(int totalCost);
 
     std::string toString();
-
-    int getCost() {
-        return cost;
-    }
 };

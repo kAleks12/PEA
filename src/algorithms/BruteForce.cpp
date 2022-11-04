@@ -1,12 +1,11 @@
 //
-// Created by kacpe on 21.10.2022.
+// Created by kacper on 21.10.2022.
 //
 #include <algorithm>
 #include "../../inc/algorithms/BruteForce.h"
 
 void BruteForce::fillBuffer(size_t verticesNumber) {
-    for(int index = 0; index < verticesNumber; ++index)
-    {
+    for(int index = 0; index < verticesNumber; ++index){
         permutationBuffer.addBack(index);
     }
 
@@ -28,7 +27,6 @@ int BruteForce::calculateCost(const AdjacencyMatrix &matrix) {
 
 void BruteForce::reassignOptimalValues(int newOptimaCost) {
     optimalPath.clear();
-
     for(int i= 0; i < permutationBuffer.getSize(); i++) {
         optimalPath.addBack(permutationBuffer.at(i));
     }
@@ -38,11 +36,14 @@ void BruteForce::reassignOptimalValues(int newOptimaCost) {
 }
 
 Path* BruteForce::execute(AdjacencyMatrix &graph) {
+    //Initialize permutation buffer
     fillBuffer(graph.getCitiesNumber());
 
     do {
+        //Get path cost for current permutation
         auto currentCost = calculateCost(graph);
 
+        //Checking whether cost is better than optimal
         if(currentCost < optimalCost) {
             reassignOptimalValues(currentCost);
         }
@@ -52,15 +53,16 @@ Path* BruteForce::execute(AdjacencyMatrix &graph) {
 }
 
 void BruteForce::testExecute(AdjacencyMatrix &graph) {
+    //Initialize permutation buffer
     fillBuffer(graph.getCitiesNumber());
 
     do {
+        //Get path cost for current permutation
         auto currentCost = calculateCost(graph);
 
+        //Checking whether cost is better than optimal
         if(currentCost < optimalCost) {
-            if(currentCost < optimalCost) {
-                reassignOptimalValues(currentCost);
-            }
+            reassignOptimalValues(currentCost);
         }
     } while (std::next_permutation(permutationBuffer.begin() + 1, permutationBuffer.end()));
 }

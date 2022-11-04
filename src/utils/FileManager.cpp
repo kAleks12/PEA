@@ -1,5 +1,5 @@
 //
-// Created by kacpe on 24.10.2022.
+// Created by kacper on 24.10.2022.
 //
 
 #include <iostream>
@@ -11,7 +11,9 @@ int *FileManager::data = nullptr;
 size_t FileManager::verticesNum = -1;
 
 void FileManager::readData(const std::string &fileName) {
+    //Deleting old data
     delete[] data;
+
     //Opening source file
     std::ifstream srcFile(fileName);
 
@@ -26,7 +28,7 @@ void FileManager::readData(const std::string &fileName) {
     std::string tmp;
     auto lastIndex = powl(FileManager::verticesNum, 2);
 
-    //Filling the array with data from source file
+    //Filling the data array with numbers from source file
     for (int index = 0; index < lastIndex; index++) {
         srcFile >> tmp;
         data[index] = std::stoi(tmp);

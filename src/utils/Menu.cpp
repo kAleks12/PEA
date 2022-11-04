@@ -1,5 +1,5 @@
 //
-// Created by kacpe on 02.11.2022.
+// Created by kacper on 02.11.2022.
 //
 
 #include <cstdlib>
@@ -50,7 +50,7 @@ void Menu::displayGraph() {
 }
 
 void Menu::initMenu() {
-//Displaying initial menu with available structures
+    //Displaying initial menu with available options
     char input;
 
     while (true) {

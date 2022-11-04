@@ -1,5 +1,5 @@
 //
-// Created by kacpe on 24.10.2022.
+// Created by kacper on 24.10.2022.
 //
 #pragma once
 
@@ -8,7 +8,9 @@
 
 class FileManager {
 public:
+    //Class variables
     static int* data;
     static size_t verticesNum;
-    static void readData(const std::string & fileName);
+
+    static void readData(const std::string & fileName); //assigns data and verticesNum members with data from file
 };

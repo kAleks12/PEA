@@ -1,5 +1,5 @@
 //
-// Created by kacpe on 02.11.2022.
+// Created by kacper on 02.11.2022.
 //
 
 #pragma once
@@ -9,11 +9,12 @@
 #include "Enums.h"
 
 class Menu {
-private:
+    //Class variables
     static AdjacencyMatrix* graph;
+
 public:
-    static void initMenu();
-    static void readGraph();
+    static void initMenu(); //display initial menu
+    static void readGraph(); //display graph creation wizard
     static void displayGraph();
-    static void runAlgorithm(Algorithms algorithm);
+    static void runAlgorithm(Algorithms algorithm); //run chosen algorithm and display result
 };

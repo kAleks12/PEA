@@ -1,5 +1,5 @@
 //
-// Created by kacpe on 21.10.2022.
+// Created by kacper on 21.10.2022.
 //
 
 #pragma once
@@ -7,16 +7,19 @@
 #include "Algorithm.h"
 
 class BruteForce : public Algorithm {
-private:
+    //Class variables
     DynamicArray<int> permutationBuffer;
     DynamicArray<int> optimalPath;
     int optimalCost;
 
-    void fillBuffer(size_t verticesNumber);
-    int calculateCost(const AdjacencyMatrix &matrix);
-    void reassignOptimalValues(int newOptimaCost);
+    void fillBuffer(size_t verticesNumber); //fills buffer with vertices indexes
+    int calculateCost(const AdjacencyMatrix &matrix); //calculates path cost for current buffer state
+    void reassignOptimalValues(int newOptimaCost); //reassigns optimalPath and optimalCost
 
 public:
+    //Calculates TSPRec result for graph and returns in Path object
     Path* execute(AdjacencyMatrix &graph) override;
+
+    //Calculates TSPRec result for graph and returns nothing, used for time measurements
     void testExecute(AdjacencyMatrix &graph) override;
 };

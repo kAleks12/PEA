@@ -1,5 +1,5 @@
 //
-// Created by kacperA on 14.03.2022.
+// Created by kacper on 14.03.2022.
 //
 
 #pragma once

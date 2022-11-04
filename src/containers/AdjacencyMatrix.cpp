@@ -1,5 +1,5 @@
 //
-// Created by kacpe on 20.10.2022.
+// Created by kacper on 20.10.2022.
 //
 
 
@@ -9,19 +9,27 @@
 AdjacencyMatrix::AdjacencyMatrix(const AdjacencyMatrix &existingMatrix) {
     citiesNumber = existingMatrix.citiesNumber;
 
+    //Initialize matrix table with zeroes
     allocate();
+
     copy(existingMatrix.getMatrix());
 }
 
 AdjacencyMatrix::AdjacencyMatrix(const size_t &verticesNumber, const int *edges) {
     this->citiesNumber = verticesNumber;
+
+    //Initialize matrix table with zeroes
     allocate();
+
     initialize(edges);
 }
 
 AdjacencyMatrix::AdjacencyMatrix(const size_t &verticesNumber, int** distances) {
     this->citiesNumber = verticesNumber;
+
+    //Initialize matrix table with zeroes
     allocate();
+
     initialize(distances);
 }
 
@@ -32,12 +40,8 @@ AdjacencyMatrix::~AdjacencyMatrix() {
 void AdjacencyMatrix::allocate() {
     this->matrix = new int *[this->citiesNumber];
 
-    for (int rowIterator = 0; rowIterator < this->citiesNumber; ++rowIterator) {
-        this->matrix[rowIterator] = new int[this->citiesNumber];
-
-        for (int columnIterator = 0; columnIterator < this->citiesNumber; ++columnIterator) {
-            this->matrix[rowIterator][columnIterator] = 0;
-        }
+    for (int i = 0; i < this->citiesNumber; ++i) {
+        this->matrix[i] = new int[this->citiesNumber] {};
     }
 }
 
@@ -46,8 +50,8 @@ void AdjacencyMatrix::deallocate() {
         return;
     }
 
-    for (int rowIterator = 0; rowIterator < this->citiesNumber; ++rowIterator) {
-        delete[] this->matrix[rowIterator];
+    for (int i = 0; i < this->citiesNumber; ++i) {
+        delete[] this->matrix[i];
     }
 
     delete[] this->matrix;
@@ -57,9 +61,10 @@ void AdjacencyMatrix::deallocate() {
 void AdjacencyMatrix::initialize(const int *edges) {
     int index = 0;
 
-    for (int rowsIterator = 0; rowsIterator < this->citiesNumber; ++rowsIterator) {
-        for (int columnIterator = 0; columnIterator < this->citiesNumber; ++columnIterator) {
-            this->matrix[rowsIterator][columnIterator] = edges[index];
+    for (int i = 0; i < this->citiesNumber; ++i) {
+
+        for (int j = 0; j < this->citiesNumber; ++j) {
+            this->matrix[i][j] = edges[index];
             index++;
         }
     }
@@ -68,19 +73,20 @@ void AdjacencyMatrix::initialize(const int *edges) {
 void AdjacencyMatrix::initialize(int** distances) {
     int index = 0;
 
-    for (int rowsIterator = 0; rowsIterator < this->citiesNumber; ++rowsIterator) {
-        for (int columnIterator = 0; columnIterator < this->citiesNumber; ++columnIterator) {
-            this->matrix[rowsIterator][columnIterator] = distances[rowsIterator][columnIterator];
+    for (int i = 0; i < this->citiesNumber; ++i) {
+
+        for (int j = 0; j < this->citiesNumber; ++j) {
+            this->matrix[i][j] = distances[i][j];
             index++;
         }
     }
 }
 
 void AdjacencyMatrix::copy(int **existingMatrix) {
-    for (int rowsIterator = 0; rowsIterator < this->citiesNumber; ++rowsIterator) {
-        for (int columnIterator = 0; columnIterator < this->citiesNumber; ++columnIterator) {
-            this->matrix[rowsIterator][columnIterator] =
-                    existingMatrix[rowsIterator][columnIterator];
+    for (int i = 0; i < this->citiesNumber; ++i) {
+
+        for (int j = 0; j < this->citiesNumber; ++j) {
+            this->matrix[i][j] = existingMatrix[i][j];
         }
     }
 }
@@ -88,9 +94,10 @@ void AdjacencyMatrix::copy(int **existingMatrix) {
 void AdjacencyMatrix::print() {
     std::cout << "Adjacency matrix:\n";
 
-    for (int rowsIterator = 0; rowsIterator < this->citiesNumber; ++rowsIterator) {
-        for (int columnIterator = 0; columnIterator < this->citiesNumber; ++columnIterator) {
-            std::cout << "| " << matrix[rowsIterator][columnIterator] << " ";
+    for (int i = 0; i < this->citiesNumber; ++i) {
+
+        for (int j = 0; j < this->citiesNumber; ++j) {
+            std::cout << "| " << matrix[i][j] << " ";
         }
 
         std::cout << "|\n";

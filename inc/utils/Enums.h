@@ -1,5 +1,5 @@
 //
-// Created by kacpe on 21.10.2022.
+// Created by kacper on 21.10.2022.
 //
 
 #pragma once
@@ -11,7 +11,7 @@ enum TimeUnit {
 };
 
 enum Algorithms {
-    BF,
-    DP,
-    BB
+    BF, //Brute force
+    DP, //Dynamic programming
+    BB //Branch and bound
 };
