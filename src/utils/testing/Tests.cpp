@@ -97,9 +97,9 @@ void Tests::test() {
         std::cout << "Done instance size -  " << vertices << "\n\n";
     }
         //Saving results of all algorithms for current vertices number
-    saveResultList("BF", Algorithms::BF);
-    saveResultList("BaB", Algorithms::BB);
-    saveResultList("DP", Algorithms::DP);
+    saveResultList("brute_force", Algorithms::BF);
+    saveResultList("branch_and_bound", Algorithms::BB);
+    saveResultList("dynamic_programming", Algorithms::DP);
 
 
         //Clearing results for next vertices number
@@ -111,7 +111,7 @@ void Tests::test() {
 //Functions that saves measurements for a single algorithm to .txt file
 void Tests::saveResultList(const std::string &algorithm, Algorithms alg) const {
     //Creating write file path
-    std::string path = "testing//" + algorithm + "_results.txt";
+    std::string path = basePath + algorithm + ".txt";
 
     switch (alg) {
         case BF:

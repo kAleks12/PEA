@@ -25,10 +25,11 @@ class Tests {
     std::list<OpResult> bfResults;
     std::list<OpResult> dpResults;
     std::list<OpResult> bbResults;
-public:
 
+public:
     size_t sampleSize = 100;
     int costRange = 100;
+    std::string basePath = "TSP_tests\\";
 
     //Class methods
     static double calcAvg(const std::list<double> &); //Calculate average time from list elements
