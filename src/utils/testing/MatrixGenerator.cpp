@@ -2,7 +2,7 @@
 // Created by kacper on 03.11.2022.
 //
 
-#include "../../inc/utils/MatrixGenerator.h"
+#include "../../../inc/utils/testing/MatrixGenerator.h"
 #include <random>
 
 AdjacencyMatrix *MatrixGenerator::graph = nullptr;

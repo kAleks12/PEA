@@ -5,7 +5,7 @@
 #pragma once
 
 #include <chrono>
-#include "Enums.h"
+#include "../Enums.h"
 
 class Timer {
     //Class variables

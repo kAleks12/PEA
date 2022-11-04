@@ -97,7 +97,6 @@ Path *DynamicProgramming::execute(AdjacencyMatrix &graph) {
     //Creating Path object from result
     auto path = createResultPath();
 
-    //Deallocating memory
     resetState();
 
     return path;
@@ -109,6 +108,5 @@ void DynamicProgramming::testExecute(AdjacencyMatrix &graph) {
     //Calculating optimal result
     dpResult result = TSPRec(graph, 0, 1);
 
-    //Deallocating memory
     resetState();
 }

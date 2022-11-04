@@ -2,7 +2,7 @@
 // Created by kacper on 21.10.2022.
 //
 
-#include "../../inc/utils/Timer.h"
+#include "../../../inc/utils/testing/Timer.h"
 #include <stdexcept>
 
 void Timer::start() {

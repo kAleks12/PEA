@@ -112,7 +112,6 @@ Path *BranchAndBound::execute(AdjacencyMatrix &graph) {
     //Creating result Path object
     auto resultPath = createResultPath();
 
-    //Deallocating memory
     resetVariables();
 
     return resultPath;
@@ -127,6 +126,5 @@ void BranchAndBound::testExecute(AdjacencyMatrix &graph) {
     //Calculating optimal cost and path
     TSPRec(graph, 0, 1);
 
-    //Deallocating memory
     resetVariables();
 }
