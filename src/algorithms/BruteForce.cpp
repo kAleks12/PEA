@@ -12,6 +12,12 @@ void BruteForce::fillBuffer(size_t verticesNumber) {
     optimalCost = INT32_MAX;
 }
 
+void BruteForce::resetVariables() {
+    permutationBuffer.clear();
+    optimalPath.clear();
+    optimalCost = INT_MAX;
+}
+
 int BruteForce::calculateCost(const AdjacencyMatrix &matrix) {
     int totalCost = 0;
     auto lastIndex = permutationBuffer.getSize() - 1;
@@ -49,7 +55,10 @@ Path* BruteForce::execute(AdjacencyMatrix &graph) {
         }
     } while (std::next_permutation(permutationBuffer.begin() + 1, permutationBuffer.end()));
 
-    return new Path(optimalPath, optimalCost);
+    auto result = new Path(optimalPath, optimalCost);
+    resetVariables();
+
+    return result;
 }
 
 void BruteForce::testExecute(AdjacencyMatrix &graph) {
@@ -65,4 +74,6 @@ void BruteForce::testExecute(AdjacencyMatrix &graph) {
             reassignOptimalValues(currentCost);
         }
     } while (std::next_permutation(permutationBuffer.begin() + 1, permutationBuffer.end()));
+
+    resetVariables();
 }

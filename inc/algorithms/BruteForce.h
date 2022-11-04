@@ -10,9 +10,11 @@ class BruteForce : public Algorithm {
     //Class variables
     DynamicArray<int> permutationBuffer;
     DynamicArray<int> optimalPath;
-    int optimalCost;
+    int optimalCost = INT_MAX;
 
     void fillBuffer(size_t verticesNumber); //fills buffer with vertices indexes
+    void resetVariables();
+
     int calculateCost(const AdjacencyMatrix &matrix); //calculates path cost for current buffer state
     void reassignOptimalValues(int newOptimaCost); //reassigns optimalPath and optimalCost
 
