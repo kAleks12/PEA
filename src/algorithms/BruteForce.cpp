@@ -5,7 +5,7 @@
 #include "../../inc/algorithms/BruteForce.h"
 
 void BruteForce::fillBuffer(size_t verticesNumber) {
-    for(int index = 0; index < verticesNumber; ++index){
+    for (int index = 0; index < verticesNumber; ++index) {
         permutationBuffer.addBack(index);
     }
 
@@ -22,7 +22,7 @@ int BruteForce::calculateCost(const AdjacencyMatrix &matrix) {
     int totalCost = 0;
     auto lastIndex = permutationBuffer.getSize() - 1;
 
-    for(int index = 0; index < lastIndex; index++) {
+    for (int index = 0; index < lastIndex; index++) {
         totalCost += matrix.getCost(permutationBuffer[index], permutationBuffer[index + 1]);
     }
 
@@ -33,7 +33,7 @@ int BruteForce::calculateCost(const AdjacencyMatrix &matrix) {
 
 void BruteForce::reassignOptimalValues(int newOptimaCost) {
     optimalPath.clear();
-    for(int i= 0; i < permutationBuffer.getSize(); i++) {
+    for (int i = 0; i < permutationBuffer.getSize(); i++) {
         optimalPath.addBack(permutationBuffer.at(i));
     }
     optimalPath.addBack(0);
@@ -41,7 +41,7 @@ void BruteForce::reassignOptimalValues(int newOptimaCost) {
     optimalCost = newOptimaCost;
 }
 
-Path* BruteForce::execute(AdjacencyMatrix &graph) {
+Path *BruteForce::execute(AdjacencyMatrix &graph) {
     //Initialize permutation buffer
     fillBuffer(graph.getCitiesNumber());
 
@@ -50,7 +50,7 @@ Path* BruteForce::execute(AdjacencyMatrix &graph) {
         auto currentCost = calculateCost(graph);
 
         //Checking whether cost is better than optimal
-        if(currentCost < optimalCost) {
+        if (currentCost < optimalCost) {
             reassignOptimalValues(currentCost);
         }
     } while (std::next_permutation(permutationBuffer.begin() + 1, permutationBuffer.end()));
@@ -70,7 +70,7 @@ void BruteForce::testExecute(AdjacencyMatrix &graph) {
         auto currentCost = calculateCost(graph);
 
         //Checking whether cost is better than optimal
-        if(currentCost < optimalCost) {
+        if (currentCost < optimalCost) {
             reassignOptimalValues(currentCost);
         }
     } while (std::next_permutation(permutationBuffer.begin() + 1, permutationBuffer.end()));

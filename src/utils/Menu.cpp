@@ -21,7 +21,7 @@ void Menu::readGraph() {
 
     FileManager::readData(fileName);
 
-    if(FileManager::data == nullptr) {
+    if (FileManager::data == nullptr) {
         system("cls");
 
         std::cout << "File not found!\n";
@@ -36,7 +36,7 @@ void Menu::readGraph() {
 void Menu::displayGraph() {
     system("cls");
 
-    if(graph == nullptr) {
+    if (graph == nullptr) {
         std::cout << "Please read graph first!\n";
         system("Pause");
 

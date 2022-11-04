@@ -10,7 +10,7 @@ void DynamicProgramming::setupVariables(const AdjacencyMatrix &graph) {
     instanceSize = graph.getCitiesNumber();
 
     //Setting numOfPaths based on size of the tree for instanceSize
-    numOfPaths = int (pow(2, instanceSize) - 1);
+    numOfPaths = int(pow(2, instanceSize) - 1);
 
     //Initializing state 2d table
     state = new dpResult *[instanceSize];
@@ -70,10 +70,10 @@ dpResult DynamicProgramming::TSPRec(AdjacencyMatrix &graph, int currVertex, int 
 }
 
 Path *DynamicProgramming::createResultPath() {
-    Path* result = new Path;
+    Path *result = new Path;
 
     for (int i = 0; i <= instanceSize; i++) {
-        if(i == instanceSize) {
+        if (i == instanceSize) {
             result->addVertex(0);
             continue;
         }
@@ -85,7 +85,6 @@ Path *DynamicProgramming::createResultPath() {
 
     return result;
 }
-
 
 
 Path *DynamicProgramming::execute(AdjacencyMatrix &graph) {

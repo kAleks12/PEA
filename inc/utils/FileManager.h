@@ -10,9 +10,9 @@
 class FileManager {
 public:
     //Class variables
-    static int* data;
+    static int *data;
     static size_t verticesNum;
 
-    static void readData(const std::string & fileName); //assigns data and verticesNum members with data from file
+    static void readData(const std::string &fileName); //assigns data and verticesNum members with data from file
     static void saveData(const std::string &fileName, const std::list<OpResult> &data); //saves list to specified file
 };

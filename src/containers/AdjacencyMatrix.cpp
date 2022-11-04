@@ -24,7 +24,7 @@ AdjacencyMatrix::AdjacencyMatrix(const size_t &verticesNumber, const int *edges)
     initialize(edges);
 }
 
-AdjacencyMatrix::AdjacencyMatrix(const size_t &verticesNumber, int** distances) {
+AdjacencyMatrix::AdjacencyMatrix(const size_t &verticesNumber, int **distances) {
     this->citiesNumber = verticesNumber;
 
     //Initialize matrix table with zeroes
@@ -41,7 +41,7 @@ void AdjacencyMatrix::allocate() {
     this->matrix = new int *[this->citiesNumber];
 
     for (int i = 0; i < this->citiesNumber; ++i) {
-        this->matrix[i] = new int[this->citiesNumber] {};
+        this->matrix[i] = new int[this->citiesNumber]{};
     }
 }
 
@@ -70,7 +70,7 @@ void AdjacencyMatrix::initialize(const int *edges) {
     }
 }
 
-void AdjacencyMatrix::initialize(int** distances) {
+void AdjacencyMatrix::initialize(int **distances) {
     int index = 0;
 
     for (int i = 0; i < this->citiesNumber; ++i) {

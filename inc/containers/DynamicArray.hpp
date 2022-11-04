@@ -15,15 +15,16 @@ class DynamicArray {
     size_t size = 0;
 
 public:
-    //Class methods
-    DynamicArray(); //Constructor
-    DynamicArray(const DynamicArray<T> &existingArray); //Constructor
-    ~DynamicArray(); //Destructor
+    DynamicArray();
+    DynamicArray(const DynamicArray<T> &existingArray);
+    ~DynamicArray();
 
-    T &operator[](const size_t &index); //Overload of [] operator
-    T* begin();
-    T* end();
     T at(int index) const;
+    T *begin();
+    T *end();
+    T &operator[](const size_t &index); //Overload of [] operator
+
+
 
     void addBack(const T &val); //Add val at the end of the table
     void addFront(const T &val); //Add val at the beginning of the table
@@ -33,7 +34,7 @@ public:
 
     //Return curr size of the table
     int getSize() const {
-        return  this->size;
+        return this->size;
     }
 
     void print();

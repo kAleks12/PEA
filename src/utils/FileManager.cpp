@@ -38,12 +38,10 @@ void FileManager::readData(const std::string &fileName) {
     srcFile.close();
 }
 
-void FileManager::saveData(const std::string &path, const std::list<OpResult> &data)
-{
+void FileManager::saveData(const std::string &path, const std::list<OpResult> &data) {
     std::ofstream saveFile(path);
 
-    for (const OpResult &result: data)
-    {
+    for (const OpResult &result: data) {
         saveFile << result.instanceSize << ";" << result.time << "\n";
     }
 

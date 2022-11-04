@@ -11,10 +11,10 @@ Path::Path() {
     cost = 0;
 }
 
-Path::Path(const DynamicArray<int> & vertices, int cost) : cost(cost) {
+Path::Path(const DynamicArray<int> &vertices, int cost) : cost(cost) {
     path = new DynamicArray<int>();
 
-    for (int index = 0; index < vertices.getSize() ; ++index) {
+    for (int index = 0; index < vertices.getSize(); ++index) {
         path->addBack(vertices.at(index));
     }
 }
@@ -39,7 +39,7 @@ void Path::setCost(int totalCost) {
 std::string Path::toString() {
     std::string path_str;
 
-    for(int iterator = 0; iterator < path->getSize(); iterator ++) {
+    for (int iterator = 0; iterator < path->getSize(); iterator++) {
         auto vertex_str = std::to_string(path->at(iterator));
 
         path_str.append(vertex_str)

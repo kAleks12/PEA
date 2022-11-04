@@ -75,7 +75,7 @@ void BranchAndBound::TSPRec(AdjacencyMatrix &graph, int baseCost, int level) {
 
         //Resetting visited table after exploring path from current vertex
         delete[] visited;
-        visited = new bool[instanceSize] {};
+        visited = new bool[instanceSize]{};
 
         for (int j = 0; j <= level - 1; j++) {
             visited[currPath[j]] = true;
@@ -87,7 +87,7 @@ Path *BranchAndBound::createResultPath() {
     Path *result = new Path;
 
     for (int i = 0; i <= instanceSize; i++) {
-        if(i == instanceSize) {
+        if (i == instanceSize) {
             result->addVertex(optimalPath[instanceSize]);
             continue;
         }

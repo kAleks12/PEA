@@ -10,11 +10,13 @@
 
 class Menu {
     //Class variables
-    static AdjacencyMatrix* graph;
+    static AdjacencyMatrix *graph;
 
 public:
     static void initMenu(); //display initial menu
+
     static void readGraph(); //display graph creation wizard
     static void displayGraph();
+
     static void runAlgorithm(Algorithms algorithm); //run chosen algorithm and display result
 };

@@ -28,16 +28,16 @@ class DynamicProgramming : public Algorithm {
     //Class variables
     size_t instanceSize{};
     size_t numOfPaths{};
-    dpResult ** state{};
+    dpResult **state{};
 
     void setupVariables(const AdjacencyMatrix &graph); //initializes all class variables
     void resetState(); //deallocates memory used by state table
     dpResult TSPRec(AdjacencyMatrix &graph, int currVertex, int visitedMask); //implements TSP algorithm
-    Path* createResultPath(); //creates Path object from optimalPath and optimalCost
+    Path *createResultPath(); //creates Path object from optimalPath and optimalCost
 
 public:
     //Calculates TSPRec result for graph and returns in Path object
-    Path* execute(AdjacencyMatrix &graph) override;
+    Path *execute(AdjacencyMatrix &graph) override;
 
     //Calculates TSPRec result for graph and returns nothing, used for time measurements
     void testExecute(AdjacencyMatrix &graph) override;

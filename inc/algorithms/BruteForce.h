@@ -20,7 +20,7 @@ class BruteForce : public Algorithm {
 
 public:
     //Calculates TSPRec result for graph and returns in Path object
-    Path* execute(AdjacencyMatrix &graph) override;
+    Path *execute(AdjacencyMatrix &graph) override;
 
     //Calculates TSPRec result for graph and returns nothing, used for time measurements
     void testExecute(AdjacencyMatrix &graph) override;
