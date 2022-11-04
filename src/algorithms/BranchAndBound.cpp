@@ -28,14 +28,6 @@ void BranchAndBound::resetVariables() {
 Path* BranchAndBound::execute(AdjacencyMatrix &graph) {
     setupVariables(graph);
 
-    // Compute initial bound
-    for (int vertex = 0; vertex < graph.getCitiesNumber(); vertex++) {
-        currBound += firstMin(graph, vertex) + secondMin(graph, vertex);
-    }
-
-    // Rounding off the lower bound to an integer
-    currBound = (currBound & 1) ? currBound / 2 + 1 : currBound / 2;
-
     // We start at vertex 1 so the first vertex
     // in curr_path[] is 0
     visited[0] = true;
@@ -54,14 +46,6 @@ Path* BranchAndBound::execute(AdjacencyMatrix &graph) {
 void BranchAndBound::testExecute(AdjacencyMatrix &graph) {
     setupVariables(graph);
 
-    // Compute initial bound
-    for (int vertex = 0; vertex < graph.getCitiesNumber(); vertex++) {
-        currBound += firstMin(graph, vertex) + secondMin(graph, vertex);
-    }
-
-    // Rounding off the lower bound to an integer
-    currBound = (currBound & 1) ? currBound / 2 + 1 : currBound / 2;
-
     // We start at vertex 1 so the first vertex
     // in curr_path[] is 0
     visited[0] = true;
@@ -79,34 +63,6 @@ void BranchAndBound::copyToFinal() {
         optimalPath[i] = currPath[i];
     }
     optimalPath[instanceSize] = currPath[0];
-}
-
-// Function to find the minimum edge cost
-// having an end at the vertex i
-int BranchAndBound::firstMin(AdjacencyMatrix &graph, int i) {
-    int min = INT_MAX;
-    for (int k = 0; k < graph.getCitiesNumber(); k++)
-        if (graph.getCost(i, k) < min && i != k)
-            min = graph.getCost(i, k);
-    return min;
-}
-
-// function to find the second minimum edge cost
-// having an end at the vertex i
-int BranchAndBound::secondMin(AdjacencyMatrix &graph, int i) {
-    int first = INT_MAX, second = INT_MAX;
-    for (int j = 0; j < graph.getCitiesNumber(); j++) {
-        if (i == j)
-            continue;
-
-        if (graph.getCost(i, j) <= first) {
-            second = first;
-            first = graph.getCost(i, j);
-        } else if (graph.getCost(i, j) <= second &&
-                   graph.getCost(i, j) != first)
-            second = graph.getCost(i, j);
-    }
-    return second;
 }
 
 void BranchAndBound::TSPRec(AdjacencyMatrix &graph, int currWeight, int level) {
@@ -138,23 +94,12 @@ void BranchAndBound::TSPRec(AdjacencyMatrix &graph, int currWeight, int level) {
         // entry in adjacency matrix and not visited
         // already)
         if (graph.getCost(currPath[level - 1], i) > 0 && !visited[i]) {
-            int temp = currBound;
             currWeight += graph.getCost(currPath[level - 1], i);
 
-            // different computation of curr_bound for
-            // level 2 from the other levels
-            if (level == 1)
-                currBound -= ((firstMin(graph, currPath[level - 1]) +
-                                firstMin(graph, i)) / 2);
-            else
-                currBound -= ((secondMin(graph, currPath[level - 1]) +
-                                firstMin(graph, i)) / 2);
-
-            // curr_bound + currWeight is the actual lower bound
             // for the node that we have arrived on
             // If current lower bound < optimalCost, we need to explore
             // the node further
-            if (currBound + currWeight < optimalCost) {
+            if (currWeight < optimalCost) {
                 currPath[level] = i;
                 visited[i] = true;
 
@@ -165,7 +110,7 @@ void BranchAndBound::TSPRec(AdjacencyMatrix &graph, int currWeight, int level) {
             // Else we have to prune the node by resetting
             // all changes to currWeight and curr_bound
             currWeight -= graph.getCost(currPath[level - 1], i);
-            currBound = temp;
+//            currBound = temp;
 
             // Also reset the visited array
             memset(visited, false, graph.getCitiesNumber());

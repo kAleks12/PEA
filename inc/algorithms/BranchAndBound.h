@@ -17,9 +17,6 @@ private:
     int* optimalPath{};
     int optimalCost = INT_MAX;
 
-    static int firstMin(AdjacencyMatrix &graph, int vertex);
-    static int secondMin(AdjacencyMatrix &graph, int vertex);
-
     void setupVariables(const AdjacencyMatrix &graph);
     void resetVariables();
     void copyToFinal();
