@@ -9,6 +9,7 @@
 #include "../../inc/algorithms/DynamicProgramming.h"
 #include "../../inc/algorithms/BranchAndBound.h"
 #include "../../inc/utils/FileManager.h"
+#include "../../inc/utils/testing/MatrixGenerator.h"
 
 AdjacencyMatrix *Menu::graph = nullptr;
 
@@ -31,6 +32,32 @@ void Menu::readGraph() {
 
     delete graph;
     graph = new AdjacencyMatrix(FileManager::verticesNum, FileManager::data);
+}
+
+void Menu::generateGraph() {
+    system("cls");
+    std::string size;
+
+    std::cout << "Enter size of the graph (If graph is already read, it will be overwritten!): ";
+    std::cin >> size;
+
+    try {
+        auto graphSize = std::stoi(size);
+
+        if (graphSize <= 0) {
+            system("cls");
+            std::cout << "Provided size must be greater than 0!\n";
+            system("Pause");
+        }
+
+        MatrixGenerator::createGraph(graphSize);
+        graph = MatrixGenerator::graph;
+
+    } catch (std::exception e) {
+        system("cls");
+        std::cout << "Provided size is not a number!\n";
+        system("Pause");
+    }
 }
 
 void Menu::displayGraph() {
@@ -57,10 +84,11 @@ void Menu::initMenu() {
         system("cls");
 
         std::cout << "[0] Read graph\n";
-        std::cout << "[1] Display graph\n";
-        std::cout << "[2] Brute force\n";
-        std::cout << "[3] Dynamic programming\n";
-        std::cout << "[4] Branch and bound\n";
+        std::cout << "[1] Generate random graph\n";
+        std::cout << "[2] Display graph\n";
+        std::cout << "[3] Brute force\n";
+        std::cout << "[4] Dynamic programming\n";
+        std::cout << "[5] Branch and bound\n";
         std::cout << "Exit program [Q]\n\n";
         std::cout << "Hello, select option: ";
 
@@ -71,15 +99,18 @@ void Menu::initMenu() {
                 readGraph();
                 break;
             case '1':
-                displayGraph();
+                generateGraph();
                 break;
             case '2':
-                runAlgorithm(Algorithms::BF);
+                displayGraph();
                 break;
             case '3':
-                runAlgorithm(Algorithms::DP);
+                runAlgorithm(Algorithms::BF);
                 break;
             case '4':
+                runAlgorithm(Algorithms::DP);
+                break;
+            case '5':
                 runAlgorithm(Algorithms::BB);
                 break;
 
