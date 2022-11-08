@@ -49,7 +49,7 @@ void Tests::addSeriesAvg(double avg, int instanceSize, Algorithms alg) {
 }
 
 //Functions that tests all algorithms for matrix representation
-void Tests::test() {
+void Tests::test(int start, int end) {
     //Creating operational variables
     std::list<double> dpIntervals;
     std::list<double> bbIntervals;
@@ -60,7 +60,7 @@ void Tests::test() {
     DynamicProgramming dpEntity;
 
     //Testing 7 different instanceSizes
-    for (int vertices = 5; vertices <= 12; vertices++) {
+    for (int vertices = start; vertices <= end; vertices++) {
         //100 times
         for (int i = 0; i < sampleSize; ++i) {
             //Generating new graph represented by matrix
@@ -70,12 +70,12 @@ void Tests::test() {
 
             //Measuring brute force algorithm
             timer.start();
-            bfEntity.testExecute(*graph);
+            //bfEntity.testExecute(*graph);
             bfIntervals.push_back(timer.getTime(MICROSECONDS));
 
             //Measuring dynamic programming algorithm
             timer.start();
-            dpEntity.testExecute(*graph);
+            //dpEntity.testExecute(*graph);
             dpIntervals.push_back(timer.getTime(MICROSECONDS));
 
             //Measuring branch and bound algorithm
@@ -95,10 +95,6 @@ void Tests::test() {
         bfIntervals.clear();
 
         std::cout << "Done instance size -  " << vertices << "\n";
-
-        if (vertices == 5) {
-            vertices++;
-        }
     }
 
     //Saving results of all algorithms for current vertices number
@@ -110,6 +106,117 @@ void Tests::test() {
     //Clearing results for next vertices number
     dpResults.clear();
     bbResults.clear();
+    bfResults.clear();
+}
+
+void Tests::testBB(int start, int end) {
+    //Creating operational variables
+    std::list<double> intervals;
+
+    BranchAndBound bbEntity;
+
+    //Testing 7 different instanceSizes
+    for (int vertices = start; vertices <= end; vertices++) {
+        //100 times
+        for (int i = 0; i < sampleSize; ++i) {
+            //Generating new graph represented by matrix
+            MatrixGenerator::createGraph(vertices, costRange);
+            graph = MatrixGenerator::graph;
+
+            //Measuring branch and bound algorithm
+            timer.start();
+            bbEntity.testExecute(*graph);
+            intervals.push_back(timer.getTime(MICROSECONDS));
+        }
+
+        //Creating series results for current density
+        addSeriesAvg(calcAvg(intervals), vertices, Algorithms::BB);
+
+        //Clearing intervals for next density
+        intervals.clear();
+
+        std::cout << "Done instance size -  " << vertices << "\n";
+    }
+
+    //Saving results of all algorithms for current vertices number
+    saveResultList("branch_and_bound", Algorithms::BB);
+
+
+    //Clearing results for next vertices number
+    bbResults.clear();
+}
+
+void Tests::testDP(int start, int end) {
+    //Creating operational variables
+    std::list<double> intervals;
+
+    DynamicProgramming dpEntity;
+
+    //Testing 7 different instanceSizes
+    for (int vertices = start; vertices <= end; vertices++) {
+        //100 times
+        for (int i = 0; i < sampleSize; ++i) {
+            //Generating new graph represented by matrix
+            MatrixGenerator::createGraph(vertices, costRange);
+            graph = MatrixGenerator::graph;
+
+            //Measuring branch and bound algorithm
+            timer.start();
+            dpEntity.testExecute(*graph);
+            intervals.push_back(timer.getTime(MICROSECONDS));
+        }
+
+        //Creating series results for current density
+        addSeriesAvg(calcAvg(intervals), vertices, Algorithms::DP);
+
+        //Clearing intervals for next density
+        intervals.clear();
+
+        std::cout << "Done instance size -  " << vertices << "\n";
+    }
+
+    //Saving results of all algorithms for current vertices number
+    saveResultList("dynamic_programming", Algorithms::DP);
+
+
+    //Clearing results for next vertices number
+    dpResults.clear();
+}
+
+void Tests::testBF(int start, int end) {
+    //Creating operational variables
+    std::list<double> intervals;
+
+    BruteForce bfEntity;
+
+    //Testing 7 different instanceSizes
+    for (int vertices = start; vertices <= end; vertices++) {
+        //100 times
+        for (int i = 0; i < sampleSize; ++i) {
+            //Generating new graph represented by matrix
+            MatrixGenerator::createGraph(vertices, costRange);
+            graph = MatrixGenerator::graph;
+
+            //Measuring branch and bound algorithm
+            timer.start();
+            bfEntity.testExecute(*graph);
+            intervals.push_back(timer.getTime(MICROSECONDS));
+        }
+
+        //Creating series results for current density
+        addSeriesAvg(calcAvg(intervals), vertices, Algorithms::DP);
+
+        //Clearing intervals for next density
+        intervals.clear();
+
+        std::cout << "Done instance size -  " << vertices << "\n";
+    }
+
+    //Saving results of all algorithms for current vertices number
+    saveResultList("dynamic_programming", Algorithms::BF);
+
+
+    //Clearing results for next vertices number
     bfResults.clear();
 }
 

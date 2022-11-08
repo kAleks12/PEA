@@ -34,6 +34,11 @@ public:
     //Class methods
     static double calcAvg(const std::list<double> &); //Calculate average time from list elements
     void addSeriesAvg(double avg, int instanceSize, Algorithms alg); //Add avg time to adequate result list
-    void test(); //Perform testing for all algorithms in matrix representation
+
+    void test(int start, int end); //Perform testing for all algorithms in matrix representation
+    void testBB(int start, int end);
+    void testDP(int start, int end);
+    void testBF(int start, int end);
+
     void saveResultList(const std::string &algorithm, Algorithms alg) const; //Save results an algorithm to file
 };
