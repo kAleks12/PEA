@@ -5,6 +5,7 @@
 #pragma once
 
 #include "Algorithm.h"
+#include <climits>
 
 class BranchAndBound : public Algorithm {
     //Class variables

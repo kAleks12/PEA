@@ -5,7 +5,6 @@
 #pragma once
 
 #include "../containers/AdjacencyMatrix.h"
-#include "../containers/DynamicArray.hpp"
 #include "../containers/Path.h"
 
 class Algorithm {

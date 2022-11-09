@@ -4,7 +4,6 @@
 
 #pragma once
 
-#include <cstdio>
 #include "../../containers/AdjacencyMatrix.h"
 
 class MatrixGenerator {
@@ -12,5 +11,5 @@ public:
     //Class variables
     static AdjacencyMatrix* graph;
 
-    static void createGraph(int instanceSize, int costRange); //generates and assigns new AdjacencyMatrix to graph member
+    static void createGraph(int instanceSize, int costRange = 100); //generates and assigns new AdjacencyMatrix to graph member
 };

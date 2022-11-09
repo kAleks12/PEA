@@ -16,6 +16,7 @@ public:
     static void initMenu(); //display initial menu
 
     static void readGraph(); //display graph creation wizard
+    static void generateGraph(); //display random graph generation wizard
     static void displayGraph();
 
     static void runAlgorithm(Algorithms algorithm); //run chosen algorithm and display result

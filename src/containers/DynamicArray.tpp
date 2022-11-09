@@ -2,8 +2,9 @@
 // Created by kacper on 14.03.2022.
 //
 
-#include <fstream>
 #include "../../inc/containers/DynamicArray.hpp"
+#include <fstream>
+#include <iostream>
 
 
 template<typename T>

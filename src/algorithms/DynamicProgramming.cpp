@@ -10,7 +10,7 @@ void DynamicProgramming::setupVariables(const AdjacencyMatrix &graph) {
     instanceSize = graph.getCitiesNumber();
 
     //Setting numOfPaths based on size of the tree for instanceSize
-    numOfPaths = int(pow(2, instanceSize) - 1);
+    numOfPaths = int(pow(2, (double) instanceSize) - 1);
 
     //Initializing state 2d table
     state = new dpResult *[instanceSize];
@@ -29,7 +29,7 @@ void DynamicProgramming::resetState() {
 dpResult DynamicProgramming::TSPRec(AdjacencyMatrix &graph, int currVertex, int visitedMask) {
     //Checking whether all vertices are visited at this point
     if (visitedMask == numOfPaths) {
-        return dpResult(graph.getCost(currVertex, 0), currVertex); // return to starting city
+        return {graph.getCost(currVertex, 0), currVertex}; // return to starting city
     }
 
     //Checking whether path for this mask was already calculated

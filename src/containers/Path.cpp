@@ -1,10 +1,9 @@
-#include "DynamicArray.tpp"
-#include "../../inc/containers/Path.h"
-
-
 //
 // Created by kacper on 21.10.2022.
 //
+
+#include "DynamicArray.tpp"
+#include "../../inc/containers/Path.h"
 
 Path::Path() {
     path = new DynamicArray<int>();
