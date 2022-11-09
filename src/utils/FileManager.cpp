@@ -2,11 +2,9 @@
 // Created by kacper on 24.10.2022.
 //
 
-#include <iostream>
+#include "../../inc/utils/FileManager.h"
 #include <fstream>
 #include <cmath>
-#include <list>
-#include "../../inc/utils/FileManager.h"
 
 int *FileManager::data = nullptr;
 size_t FileManager::verticesNum = -1;
@@ -38,10 +36,10 @@ void FileManager::readData(const std::string &fileName) {
     srcFile.close();
 }
 
-void FileManager::saveData(const std::string &path, const std::list<OpResult> &data) {
+void FileManager::saveData(const std::string &path, const std::list<OpResult> &resultData) {
     std::ofstream saveFile(path);
 
-    for (const OpResult &result: data) {
+    for (const OpResult &result: resultData) {
         saveFile << result.instanceSize << ";" << result.time << "\n";
     }
 

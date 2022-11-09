@@ -3,9 +3,8 @@
 //
 #pragma once
 
-#include <cstdio>
-#include <string>
 #include "testing/Tests.h"
+#include <string>
 
 class FileManager {
 public:

@@ -5,6 +5,7 @@
 #pragma once
 
 #include "Algorithm.h"
+#include <climits>
 
 class BruteForce : public Algorithm {
     //Class variables

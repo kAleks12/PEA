@@ -3,8 +3,8 @@
 //
 
 
-#include <iostream>
 #include "../../inc/containers/AdjacencyMatrix.h"
+#include <iostream>
 
 AdjacencyMatrix::AdjacencyMatrix(const AdjacencyMatrix &existingMatrix) {
     citiesNumber = existingMatrix.citiesNumber;

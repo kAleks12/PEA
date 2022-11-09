@@ -5,6 +5,7 @@
 #pragma once
 
 #include "Algorithm.h"
+#include <climits>
 
 //Structure used to pass optimal path and cost
 // from lower to upper levels of recursive function TSPRec

@@ -1,15 +1,15 @@
 //
 // Created by kacper on 21.10.2022.
 //
-#include <algorithm>
 #include "../../inc/algorithms/BruteForce.h"
+#include <algorithm>
 
 void BruteForce::fillBuffer(size_t verticesNumber) {
     for (int index = 0; index < verticesNumber; ++index) {
         permutationBuffer.addBack(index);
     }
 
-    optimalCost = INT32_MAX;
+    optimalCost = INT_MAX;
 }
 
 void BruteForce::resetVariables() {

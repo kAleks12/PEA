@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include <cstdio>
 #include "DynamicArray.hpp"
+#include <string>
 
 class Path {
     //Class variables

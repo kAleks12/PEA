@@ -3,11 +3,12 @@
 //
 
 #include "../../../inc/utils/testing/Tests.h"
+#include "../../../inc/utils/FileManager.h"
 #include "../../../inc/utils/testing/MatrixGenerator.h"
 #include "../../../inc/algorithms/BranchAndBound.h"
 #include "../../../inc/algorithms/BruteForce.h"
 #include "../../../inc/algorithms/DynamicProgramming.h"
-#include "../../../inc/utils/FileManager.h"
+#include <iostream>
 
 AdjacencyMatrix *Tests::graph = nullptr;
 

@@ -4,7 +4,6 @@
 
 #pragma once
 
-#include <cstdio>
 #include "../../containers/AdjacencyMatrix.h"
 
 class MatrixGenerator {

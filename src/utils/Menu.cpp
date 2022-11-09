@@ -2,7 +2,7 @@
 // Created by kacper on 02.11.2022.
 //
 
-#include <cstdlib>
+//#include <cstdlib>
 #include <iostream>
 #include "../../inc/utils/Menu.h"
 #include "../../inc/algorithms/BruteForce.h"
@@ -53,7 +53,7 @@ void Menu::generateGraph() {
         MatrixGenerator::createGraph(graphSize);
         graph = MatrixGenerator::graph;
 
-    } catch (std::exception e) {
+    } catch (std::exception &e) {
         system("cls");
         std::cout << "Provided size is not a number!\n";
         system("Pause");

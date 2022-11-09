@@ -4,11 +4,11 @@
 
 #pragma once
 
-#include <list>
-#include <string>
 #include "../../containers/AdjacencyMatrix.h"
 #include "../Enums.h"
 #include "Timer.h"
+#include <list>
+#include <string>
 
 //Helping structure for individual results
 struct OpResult {
