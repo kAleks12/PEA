@@ -2,7 +2,7 @@
 // Created by kacpe on 29.11.2022.
 //
 
-#include "RandomGenerator.h"
+#include "../../inc/utils/RandomGenerator.h"
 std::mt19937 RandomGenerator::gen((std::random_device())());
 
 int RandomGenerator::getInt(int high) {
