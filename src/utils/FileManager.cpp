@@ -6,8 +6,36 @@
 #include <fstream>
 #include <cmath>
 
+std::map<std::string, int> *FileManager::solutions = nullptr;
 int *FileManager::data = nullptr;
 size_t FileManager::verticesNum = -1;
+
+void FileManager::readSolutions(const std::string &fileName) {
+    //Deleting old data
+    delete[] solutions;
+
+    //Opening source file
+    std::ifstream srcFile(fileName);
+
+    //Checking whether file exists
+    if (!srcFile.is_open()) {
+        return;
+    }
+
+    solutions = new std::map<std::string, int>;
+
+    while (!srcFile.eof()) {
+        std::string instanceName;
+        int optimalCost;
+
+        srcFile >> instanceName >> optimalCost;
+        auto row = new std::pair<std::string, int>(instanceName, optimalCost);
+        solutions->insert(*row);
+        delete row;
+    }
+
+    srcFile.close();
+}
 
 void FileManager::readData(const std::string &fileName) {
     //Deleting old data
