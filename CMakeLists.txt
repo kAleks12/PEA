@@ -27,7 +27,7 @@ add_executable(
         inc/utils/FileManager.h
         src/utils/FileManager.cpp
 
-        inc/utils/RandomGenerator.cpp
+        src/utils/RandomGenerator.cpp
         inc/utils/RandomGenerator.h
 
         inc/utils/testing/MatrixGenerator.h
