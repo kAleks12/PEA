@@ -25,6 +25,15 @@ DynamicArray<T>::DynamicArray(const DynamicArray<T> &existingArray): size(existi
 }
 
 template<typename T>
+DynamicArray<T>::DynamicArray(int start, int tableSize) {
+    size = tableSize;
+    head = new T[size];
+    for (int i = 0; i < size; i++) {
+        head[i] = start++;
+    }
+}
+
+template<typename T>
 DynamicArray<T>::~DynamicArray() {
     //Deleting head if it exists
     if (this->head != nullptr) {
@@ -43,6 +52,21 @@ T &DynamicArray<T>::operator[](const size_t &index) {
     return *(this->head + index);
 }
 
+template<typename T>
+DynamicArray<T>& DynamicArray<T>::operator=(const DynamicArray<T> other)
+{
+    delete[] head;
+
+    this->size = other.size;
+    this->head = new T[other.size];
+
+    for (size_t i = 0; i < size; i++)
+    {
+        this->head[i] = other.head[i];
+    }
+
+    return *this;
+}
 
 template<typename T>
 void DynamicArray<T>::addBack(const T &val) {
@@ -172,6 +196,25 @@ void DynamicArray<T>::clear() {
 
     this->head = new T[0];
     this->size = 0;
+}
+
+template<typename T>
+void DynamicArray<T>::swap(int index1, int index2) {
+    if (index1 > this->size || index1 < 0) {
+        std::string errorMsg = "Index " + std::to_string(index1) + " out of bounds!";
+        throw std::invalid_argument(errorMsg);
+    }
+    if (index2 > this->size || index2 < 0) {
+        std::string errorMsg = "Index " + std::to_string(index2) + " out of bounds!";
+        throw std::invalid_argument(errorMsg);
+    }
+    if (index1 == index2) {
+        return;
+    }
+
+    auto tmp = head[index1];
+    head[index1] = head[index2];
+    head[index2] = tmp;
 }
 
 template
