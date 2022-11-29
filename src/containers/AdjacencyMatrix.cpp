@@ -16,6 +16,10 @@ AdjacencyMatrix::AdjacencyMatrix(const AdjacencyMatrix &existingMatrix) {
 }
 
 AdjacencyMatrix::AdjacencyMatrix(const size_t &verticesNumber, const int *edges) {
+    if (edges == nullptr) {
+        throw std::invalid_argument("Edges table cannot be null");
+    }
+
     this->citiesNumber = verticesNumber;
 
     //Initialize matrix table with zeroes
@@ -25,6 +29,10 @@ AdjacencyMatrix::AdjacencyMatrix(const size_t &verticesNumber, const int *edges)
 }
 
 AdjacencyMatrix::AdjacencyMatrix(const size_t &verticesNumber, int **distances) {
+    if (distances == nullptr) {
+        throw std::invalid_argument("Edges table cannot be null");
+    }
+
     this->citiesNumber = verticesNumber;
 
     //Initialize matrix table with zeroes
