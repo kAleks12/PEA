@@ -8,6 +8,7 @@
 
 class SimulatedAnnealing : public Algorithm {
     const double heat;
+    const double coolingRate;
     DynamicArray<int> bestSolution;
     int bestCost;
 
@@ -17,7 +18,7 @@ class SimulatedAnnealing : public Algorithm {
     static void quickShuffle(DynamicArray<int> &vertices);
 
 public:
-    explicit SimulatedAnnealing(double heat = 1000);
+    explicit SimulatedAnnealing(double heat = 1000, double coolingRate = 0.999);
 
     Path *execute(AdjacencyMatrix &matrix) override;
     void testExecute(AdjacencyMatrix &matrix) override;

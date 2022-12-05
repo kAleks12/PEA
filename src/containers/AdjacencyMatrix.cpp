@@ -111,3 +111,5 @@ void AdjacencyMatrix::print() {
         std::cout << "|\n";
     }
 }
+
+AdjacencyMatrix::AdjacencyMatrix() = default;

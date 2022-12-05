@@ -6,7 +6,7 @@
 #include "../../inc/utils/RandomGenerator.h"
 #include <cmath>
 
-SimulatedAnnealing::SimulatedAnnealing(const double heat) : heat(heat) {}
+SimulatedAnnealing::SimulatedAnnealing(const double heat, const double coolingRate) : heat(heat), coolingRate(coolingRate) {}
 
 int SimulatedAnnealing::calculateCost(AdjacencyMatrix &graph, DynamicArray<int> &vertices) {
     int result = 0;
@@ -51,7 +51,6 @@ Path *SimulatedAnnealing::execute(AdjacencyMatrix &matrix) {
     double currHeat = heat;
 
     while (currHeat > 1) {
-//        std::cout << currHeat << std::endl;
         DynamicArray<int> newVertices(vertices);
         quickShuffle(newVertices);
 
@@ -61,7 +60,7 @@ Path *SimulatedAnnealing::execute(AdjacencyMatrix &matrix) {
         if (costDifference > 0 || makeDecision(costDifference, currHeat)) {
             cost = newCost;
             vertices = newVertices;
-            currHeat *= 0.999;
+            currHeat *= coolingRate;
 
             if (newCost < bestCost) {
                 bestCost = newCost;

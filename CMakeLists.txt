@@ -33,8 +33,11 @@ add_executable(
         inc/utils/testing/MatrixGenerator.h
         src/utils/testing/MatrixGenerator.cpp
 
-        inc/utils/testing/Tests.h
-        src/utils/testing/Tests.cpp
+        inc/utils/testing/TSP1_tests.h
+        src/utils/testing/TSP1_tests.cpp
+
+        inc/utils/testing/TSP2_tests.h
+        src/utils/testing/TSP2_tests.cpp
 
         inc/algorithms/Algorithm.h
 
@@ -49,4 +52,6 @@ add_executable(
 
         inc/algorithms/SimulatedAnnealing.h
         src/algorithms/SimulatedAnnealing.cpp
-        inc/algorithms/TabuSearch.h src/algorithms/TabuSearch.cpp)
+        inc/algorithms/TabuSearch.h
+        src/algorithms/TabuSearch.cpp
+        )
