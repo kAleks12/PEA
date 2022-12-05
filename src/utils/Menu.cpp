@@ -10,6 +10,8 @@
 #include "../../inc/algorithms/BranchAndBound.h"
 #include "../../inc/utils/FileManager.h"
 #include "../../inc/utils/testing/MatrixGenerator.h"
+#include "../../inc/algorithms/SimulatedAnnealing.h"
+#include "../../inc/algorithms/TabuSearch.h"
 
 AdjacencyMatrix *Menu::graph = nullptr;
 
@@ -83,6 +85,38 @@ void Menu::initMenu() {
     while (true) {
         system("cls");
 
+        std::cout << "[0] TSP1\n";
+        std::cout << "[1] TSP2\n";
+        std::cout << "Exit program [Q]\n\n";
+        std::cout << "Hello, select option: ";
+
+        std::cin >> input;
+
+        switch (input) {
+            case '0':
+                tsp1Menu();
+                break;
+            case '1':
+                tsp2Menu();
+                break;
+            case 'Q':
+                return;
+            case 'q':
+                return;
+
+            default:
+                break;
+        }
+    }
+}
+
+void Menu::tsp1Menu() {
+//Displaying initial menu with available options
+    char input;
+
+    while (true) {
+        system("cls");
+
         std::cout << "[0] Read graph\n";
         std::cout << "[1] Generate random graph\n";
         std::cout << "[2] Display graph\n";
@@ -113,7 +147,50 @@ void Menu::initMenu() {
             case '5':
                 runAlgorithm(Algorithms::BB);
                 break;
+            case 'Q':
+                return;
+            case 'q':
+                return;
 
+            default:
+                break;
+        }
+    }
+}
+
+void Menu::tsp2Menu() {
+//Displaying initial menu with available options
+    char input;
+
+    while (true) {
+        system("cls");
+
+        std::cout << "[0] Read graph\n";
+        std::cout << "[1] Generate random graph\n";
+        std::cout << "[2] Display graph\n";
+        std::cout << "[3] Simulated annealing\n";
+        std::cout << "[4] Tabu search\n";
+        std::cout << "Exit program [Q]\n\n";
+        std::cout << "Hello, select option: ";
+
+        std::cin >> input;
+
+        switch (input) {
+            case '0':
+                readGraph();
+                break;
+            case '1':
+                generateGraph();
+                break;
+            case '2':
+                displayGraph();
+                break;
+            case '3':
+                runAlgorithm(Algorithms::SA);
+                break;
+            case '4':
+                runAlgorithm(Algorithms::TS);
+                break;
             case 'Q':
                 return;
             case 'q':
@@ -138,6 +215,8 @@ void Menu::runAlgorithm(Algorithms algorithm) {
     BruteForce bfEntity;
     DynamicProgramming dpEntity;
     BranchAndBound bbEntity;
+    SimulatedAnnealing saEntity;
+    TabuSearch tsEntity;
 
     switch (algorithm) {
         case BF:
@@ -152,6 +231,14 @@ void Menu::runAlgorithm(Algorithms algorithm) {
 
         case BB:
             std::cout << bbEntity.execute(*graph)->toString() << std::endl;
+            system("Pause");
+            break;
+        case SA:
+            std::cout << saEntity.execute(*graph)->toString() << std::endl;
+            system("Pause");
+            break;
+        case TS:
+            std::cout << tsEntity.execute(*graph)->toString() << std::endl;
             system("Pause");
             break;
     }
