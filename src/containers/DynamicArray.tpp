@@ -53,19 +53,32 @@ T &DynamicArray<T>::operator[](const size_t &index) {
 }
 
 template<typename T>
-DynamicArray<T>& DynamicArray<T>::operator=(const DynamicArray<T> other)
-{
+DynamicArray<T> &DynamicArray<T>::operator=(const DynamicArray<T> other) {
     delete[] head;
 
     this->size = other.size;
     this->head = new T[other.size];
 
-    for (size_t i = 0; i < size; i++)
-    {
+    for (size_t i = 0; i < size; i++) {
         this->head[i] = other.head[i];
     }
 
     return *this;
+}
+
+template<typename T>
+bool DynamicArray<T>::operator==(const DynamicArray<T> other) {
+    if (this->size != other.size) {
+        return false;
+    }
+
+    for (size_t i = 0; i < size; i++) {
+        if (this->head[i] != other.head[i]) {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 template<typename T>
@@ -154,6 +167,49 @@ void DynamicArray<T>::removeFront() {
 }
 
 template<typename T>
+void DynamicArray<T>::remove(const size_t &position) {
+    //Checking whether position is within bounds of the array
+    if (position >= this->size) {
+        throw std::out_of_range("Out of range!");
+    }
+
+    //Checking whether array is empty
+    if (this->size == 0) {
+        return;
+    }
+
+    //Checking whether to call removeFront()
+    if (position == 0) {
+        removeFront();
+        return;
+    }
+
+    //Checking whether to call removeBack()
+    if (position == size - 1) {
+        removeBack();
+        return;
+    }
+
+    //Creating new head
+    T *newHead = new T[this->size - 1];
+
+    //Restoring ol elements till position index
+    for (int i = 0; i < position; i++) {
+        newHead[i] = this->head[i];
+    }
+
+    //Restoring rest of the elements without one on position index
+    for (int i = position; i < this->size - 1; i++) {
+        newHead[i] = this->head[i + 1];
+    }
+
+    //Deleting old head and swapping it for the new one
+    delete[] this->head;
+    this->head = newHead;
+    this->size--;
+}
+
+template<typename T>
 T DynamicArray<T>::at(int index) const {
     if (index > this->size || index < 0) {
         std::string errorMsg = "Index " + std::to_string(index) + " out of bounds!";
@@ -191,11 +247,38 @@ void DynamicArray<T>::print() {
 }
 
 template<typename T>
+std::string DynamicArray<T>::serialize() {
+    std::string output = "";
+
+    for (int i = 0; i < this->size; i++) {
+        output += head[i];
+    }
+
+    return output;
+}
+
+template<typename T>
+bool DynamicArray<T>::isEmpty() {
+    return this->size == 0;
+}
+
+template<typename T>
 void DynamicArray<T>::clear() {
     delete[] head;
 
     this->head = new T[0];
     this->size = 0;
+}
+
+template<typename T>
+bool DynamicArray<T>::contains(T element) {
+    for (int i = 0; i < size; ++i) {
+        if(head[i] == element) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 template<typename T>
@@ -222,3 +305,6 @@ class DynamicArray<int>;
 
 template
 class DynamicArray<size_t>;
+
+template
+class DynamicArray<std::string>;

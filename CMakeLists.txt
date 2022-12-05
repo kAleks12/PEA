@@ -49,4 +49,4 @@ add_executable(
 
         inc/algorithms/SimulatedAnnealing.h
         src/algorithms/SimulatedAnnealing.cpp
-        )
+        inc/algorithms/TabuSearch.h src/algorithms/TabuSearch.cpp)

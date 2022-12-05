@@ -50,3 +50,7 @@ std::string Path::toString() {
 
     return path_str;
 }
+
+int Path::getCost() {
+    return cost;
+}

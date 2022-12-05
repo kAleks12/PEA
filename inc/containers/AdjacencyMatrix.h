@@ -35,7 +35,7 @@ public:
         return this->matrix[origin][destination];
     }
 
-    size_t getCitiesNumber() const {
+    int getCitiesNumber() const {
         return this->citiesNumber;
     }
 };

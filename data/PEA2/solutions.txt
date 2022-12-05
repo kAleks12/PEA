@@ -1,3 +1,4 @@
+tsp_17.txt 39
 tsp_34.txt 1286
 tsp_39.txt 1530
 tsp_45.txt 1613
