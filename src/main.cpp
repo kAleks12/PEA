@@ -15,13 +15,5 @@
 #define var auto
 
 int main() {
-//   Menu::initMenu();
-
-    TimeTests tests1;
-    tests1.sampleSize = 10;
-    tests1.testTS(20, 80, 10);
-
-//    ErrorTests tests;
-//    tests.sampleSize = 10;
-//    tests.testAll();
+    Menu::initMenu();
 }
