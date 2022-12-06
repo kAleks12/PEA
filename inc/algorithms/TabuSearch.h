@@ -7,27 +7,26 @@
 #include "Algorithm.h"
 
 class TabuSearch : public Algorithm {
-    const int iterations;
-    const int recentCacheSize;
-    const int plbCacheSize;
+    const int iterationLimit;
+    const int maxCacheSize;
+    const int neighboursListSize;
 
-    static void updateCache(DynamicArray<std::string> &cache,
-                            const std::string &newElement, int maxSize);
-    static int calculateCost(AdjacencyMatrix &graph, DynamicArray<int> &path);
-    static int calculateCost(AdjacencyMatrix &graph, std::string &path);
-    static void fullShuffle(DynamicArray<int> &path);
-    static void quickShuffle(DynamicArray<int> &path);
-    static DynamicArray<int> toIntArray(const std::string& serializedData);
-    static DynamicArray<std::string> generateNeighbours(DynamicArray<int> path);
-    static std::string extractBest(AdjacencyMatrix &graph, DynamicArray<std::string> &path);
+    static int calculatePathCost(const AdjacencyMatrix &graph, const std::string &vertices);
+    static std::string getInitialPath(int instanceSize);
+    static void swapRandomPair(std::string &vertices);
+    static void swapPair(std::string &vertices, int firstIndex, int secondIndex);
+
+    DynamicArray<std::string> generateNeighbours(std::string vertices) const;
+    void updateCache(const std::string &currentPath, DynamicArray<std::string> &cache) const;
 
 public:
     explicit TabuSearch(
-            int recentCacheSize = 5,
-            int plbCacheSize = 5,
-            int iterations = 1000
-    );
+            int iterationLimit = 3000,
+            int maxCacheSize = 200,
+            int neighboursListSize = 100
+                    );
 
-    Path *execute(AdjacencyMatrix &matrix) override;
-    void testExecute(AdjacencyMatrix &matrix) override;
+    void testExecute(AdjacencyMatrix &graph) override;
+
+    Path *execute(AdjacencyMatrix &graph) override;
 };
