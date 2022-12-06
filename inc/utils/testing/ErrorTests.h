@@ -14,16 +14,16 @@ struct Instance {
     std::string name;
 };
 
-struct TSP2_result {
+struct ErrorResult {
     double avgTime;
     double avgResult;
     std::string instanceName;
 };
 
-class TSP2_tests {
+class ErrorTests {
     std::list <Instance> instances;
-    std::list<TSP2_result> saResults;
-    std::list<TSP2_result> tsResults;
+    std::list<ErrorResult> saResults;
+    std::list<ErrorResult> tsResults;
 
     static double calcAvg(const std::list<double> &); //Calculate average time from list elements
     static double calcAvg(const std::list<int> &); //Calculate average time from list elements
@@ -34,7 +34,7 @@ class TSP2_tests {
 
 public :
     size_t sampleSize = 100;
-    std::string outputPath = "TSP2_tests\\";
+    std::string outputPath = "Error_tests\\";
     std::string inputPath = "input//";
 
     void testAll();

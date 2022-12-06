@@ -64,20 +64,20 @@ void FileManager::readData(const std::string &fileName) {
     srcFile.close();
 }
 
-void FileManager::saveData(const std::string &path, const std::list<TSP1_result> &resultData) {
+void FileManager::saveData(const std::string &path, const std::list<TimeResult> &resultData) {
     std::ofstream saveFile(path);
 
-    for (const TSP1_result &result: resultData) {
+    for (const TimeResult &result: resultData) {
         saveFile << result.instanceSize << ";" << result.time << "\n";
     }
 
     saveFile.close();
 }
 
-void FileManager::saveData(const std::string &path, const std::list<TSP2_result> &resultData) {
+void FileManager::saveData(const std::string &path, const std::list<ErrorResult> &resultData) {
     std::ofstream saveFile(path);
 
-    for (const TSP2_result &result: resultData) {
+    for (const ErrorResult &result: resultData) {
         saveFile << result.instanceName << ";" << result.avgResult << ";" << result.avgTime << "\n";
     }
 

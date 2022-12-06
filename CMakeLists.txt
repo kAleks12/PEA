@@ -33,11 +33,11 @@ add_executable(
         inc/utils/testing/MatrixGenerator.h
         src/utils/testing/MatrixGenerator.cpp
 
-        inc/utils/testing/TSP1_tests.h
-        src/utils/testing/TSP1_tests.cpp
+        inc/utils/testing/TimeTests.h
+        src/utils/testing/TimeTests.cpp
 
-        inc/utils/testing/TSP2_tests.h
-        src/utils/testing/TSP2_tests.cpp
+        inc/utils/testing/ErrorTests.h
+        src/utils/testing/ErrorTests.cpp
 
         inc/algorithms/Algorithm.h
 

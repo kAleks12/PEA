@@ -11,22 +11,22 @@
 #include <string>
 
 //Helping structure for individual results
-struct TSP1_result {
+struct TimeResult {
     double time;
     size_t instanceSize;
 };
 
 
-class TSP1_tests {
+class TimeTests {
     //Class variables
     static AdjacencyMatrix *graph;
 
     Timer timer;
-    std::list<TSP1_result> bfResults;
-    std::list<TSP1_result> dpResults;
-    std::list<TSP1_result> bbResults;
-    std::list<TSP1_result> saResults;
-    std::list<TSP1_result> tsResults;
+    std::list<TimeResult> bfResults;
+    std::list<TimeResult> dpResults;
+    std::list<TimeResult> bbResults;
+    std::list<TimeResult> saResults;
+    std::list<TimeResult> tsResults;
 
     void saveResultList(const std::string &algorithm, Algorithms alg) const; //Save results an algorithm to file
     void addSeriesAvg(double avg, int instanceSize, Algorithms alg); //Add avg time to adequate result list
@@ -35,12 +35,13 @@ class TSP1_tests {
 public:
     size_t sampleSize = 100;
     int costRange = 100;
-    std::string basePath = "TSP1_tests\\";
+    std::string basePath = "TimeTests\\";
 
     //Class methods
     void testAll(int start, int end); //Perform testing for all algorithms in matrix representation
     void testBB(int start, int end);
     void testDP(int start, int end);
     void testBF(int start, int end);
-
+    void testSA(int start, int end, int jump);
+    void testTS(int start, int end, int jump);
 };

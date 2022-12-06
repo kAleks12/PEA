@@ -2,7 +2,7 @@
 // Created by kacpe on 04.11.2022.
 //
 
-#include "../../../inc/utils/testing/TSP1_tests.h"
+#include "../../../inc/utils/testing/TimeTests.h"
 #include "../../../inc/utils/FileManager.h"
 #include "../../../inc/utils/testing/MatrixGenerator.h"
 #include "../../../inc/algorithms/BranchAndBound.h"
@@ -13,10 +13,10 @@
 #include <iostream>
 #include <unistd.h>
 
-AdjacencyMatrix *TSP1_tests::graph = nullptr;
+AdjacencyMatrix *TimeTests::graph = nullptr;
 
 //Function that calculates average time for provided list with intervals
-double TSP1_tests::calcAvg(const std::list<double> &dataStr) {
+double TimeTests::calcAvg(const std::list<double> &dataStr) {
     double avg = 0;
 
     //Calculating average from provided vector's elements
@@ -29,8 +29,8 @@ double TSP1_tests::calcAvg(const std::list<double> &dataStr) {
 }
 
 //Function that creates single series result and adds it to adequate list
-void TSP1_tests::addSeriesAvg(double avg, int instanceSize, Algorithms alg) {
-    TSP1_result result{};
+void TimeTests::addSeriesAvg(double avg, int instanceSize, Algorithms alg) {
+    TimeResult result{};
 
     //Creating result object for specific structure and operation
     result.time = avg;
@@ -49,17 +49,23 @@ void TSP1_tests::addSeriesAvg(double avg, int instanceSize, Algorithms alg) {
         case BB:
             bbResults.push_back(result);
             break;
+        case SA:
+            saResults.push_back(result);
+            break;
+        case TS:
+            tsResults.push_back(result);
+            break;
     }
 }
 
 //Functions that tests all algorithms for matrix representation
-void TSP1_tests::testAll(int start, int end) {
+void TimeTests::testAll(int start, int end) {
     testBF(start, end);
     testDP(start, end);
     testBB(start, end);
 }
 
-void TSP1_tests::testBB(int start, int end) {
+void TimeTests::testBB(int start, int end) {
     mkdir(basePath.c_str());
 
     //Creating operational variables
@@ -98,7 +104,7 @@ void TSP1_tests::testBB(int start, int end) {
     bbResults.clear();
 }
 
-void TSP1_tests::testDP(int start, int end) {
+void TimeTests::testDP(int start, int end) {
     mkdir(basePath.c_str());
 
     //Creating operational variables
@@ -137,7 +143,7 @@ void TSP1_tests::testDP(int start, int end) {
     dpResults.clear();
 }
 
-void TSP1_tests::testBF(int start, int end) {
+void TimeTests::testBF(int start, int end) {
     mkdir(basePath.c_str());
 
     //Creating operational variables
@@ -176,8 +182,85 @@ void TSP1_tests::testBF(int start, int end) {
     bfResults.clear();
 }
 
+void TimeTests::testSA(int start, int end, int jump) {
+    mkdir(basePath.c_str());
+
+    //Creating operational variables
+    std::list<double> intervals;
+
+    SimulatedAnnealing saEntity;
+
+    //Testing 7 different instanceSizes
+    for (int vertices = start; vertices <= end; vertices += jump) {
+        //100 times
+        for (int i = 0; i < sampleSize; ++i) {
+            //Generating new graph represented by matrix
+            MatrixGenerator::createGraph(vertices, costRange);
+            graph = MatrixGenerator::graph;
+
+            //Measuring branch and bound algorithm
+            timer.start();
+            saEntity.testExecute(*graph);
+            intervals.push_back(timer.getTime(MILLISECONDS));
+        }
+
+        //Creating series results for current density
+        addSeriesAvg(calcAvg(intervals), vertices, Algorithms::SA);
+
+        //Clearing intervals for next density
+        intervals.clear();
+
+        std::cout << "Done instance size -  " << vertices << "\n";
+    }
+
+    //Saving results of all algorithms for current vertices number
+    saveResultList("simulated_annealing", Algorithms::SA);
+
+
+    //Clearing results for next vertices number
+    saResults.clear();
+}
+
+void TimeTests::testTS(int start, int end, int jump) {
+    mkdir(basePath.c_str());
+
+    //Creating operational variables
+    std::list<double> intervals;
+
+    TabuSearch tsEntity;
+
+    //Testing 7 different instanceSizes
+    for (int vertices = start; vertices <= end; vertices += jump) {
+        for (int i = 0; i < sampleSize; ++i) {
+            //Generating new graph represented by matrix
+            MatrixGenerator::createGraph(vertices, costRange);
+            graph = MatrixGenerator::graph;
+
+            //Measuring branch and bound algorithm
+            timer.start();
+            tsEntity.testExecute(*graph);
+            intervals.push_back(timer.getTime(MILLISECONDS));
+        }
+
+        //Creating series results for current density
+        addSeriesAvg(calcAvg(intervals), vertices, Algorithms::TS);
+
+        //Clearing intervals for next density
+        intervals.clear();
+
+        std::cout << "Done instance size -  " << vertices << "\n";
+    }
+
+    //Saving results of all algorithms for current vertices number
+    saveResultList("tabu_search", Algorithms::TS);
+
+
+    //Clearing results for next vertices number
+    tsResults.clear();
+}
+
 //Functions that saves measurements for a single algorithm to .txt file
-void TSP1_tests::saveResultList(const std::string &algorithm, Algorithms alg) const  {
+void TimeTests::saveResultList(const std::string &algorithm, Algorithms alg) const {
     //Creating write file path
     std::string path = basePath + algorithm + ".txt";
 

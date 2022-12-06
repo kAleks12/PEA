@@ -3,10 +3,10 @@
 //
 #pragma once
 
-#include "testing/TSP1_tests.h"
+#include "testing/TimeTests.h"
 #include <string>
 #include "../../inc/containers/DynamicArray.hpp"
-#include "testing/TSP2_tests.h"
+#include "testing/ErrorTests.h"
 #include <map>
 
 class FileManager {
@@ -18,6 +18,6 @@ public:
 
     static void readData(const std::string &fileName); //assigns data and verticesNum members with data from file
     static void readSolutions(const std::string &fileName); //assigns data and verticesNum members with data from file
-    static void saveData(const std::string &fileName, const std::list<TSP1_result> &data); //saves list to specified file
-    static void saveData(const std::string &fileName, const std::list<TSP2_result> &data); //saves list to specified file
+    static void saveData(const std::string &fileName, const std::list<TimeResult> &data); //saves list to specified file
+    static void saveData(const std::string &fileName, const std::list<ErrorResult> &data); //saves list to specified file
 };

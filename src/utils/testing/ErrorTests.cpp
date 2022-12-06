@@ -3,19 +3,22 @@
 //
 
 #include <utility>
+#include <iostream>
+#include <unistd.h>
 
-#include "../../../inc/utils/testing/TSP2_tests.h"
+#include "../../../inc/utils/testing/ErrorTests.h"
 #include "../../../inc/utils/FileManager.h"
 #include "../../../inc/algorithms/SimulatedAnnealing.h"
 #include "../../../inc/algorithms/TabuSearch.h"
 
-void TSP2_tests::testAll() {
+void ErrorTests::testAll() {
     testSA();
     testTS();
 }
 
-void TSP2_tests::testSA() {
+void ErrorTests::testSA() {
     loadInstances();
+    mkdir(outputPath.c_str());
 
     //Creating operational variables
     std::list<double> timeResults;
@@ -52,8 +55,9 @@ void TSP2_tests::testSA() {
     saResults.clear();
 }
 
-void TSP2_tests::testTS() {
+void ErrorTests::testTS() {
     loadInstances();
+    mkdir(outputPath.c_str());
 
     //Creating operational variables
     std::list<double> timeResults;
@@ -90,7 +94,7 @@ void TSP2_tests::testTS() {
     tsResults.clear();
 }
 
-double TSP2_tests::calcAvg(const std::list<double> &dataStr) {
+double ErrorTests::calcAvg(const std::list<double> &dataStr) {
     double avg = 0;
 
     //Calculating average from provided vector's elements
@@ -102,7 +106,7 @@ double TSP2_tests::calcAvg(const std::list<double> &dataStr) {
     return avg;
 }
 
-double TSP2_tests::calcAvg(const std::list<int> &dataStr) {
+double ErrorTests::calcAvg(const std::list<int> &dataStr) {
     double avg = 0;
 
     //Calculating average from provided vector's elements
@@ -114,8 +118,8 @@ double TSP2_tests::calcAvg(const std::list<int> &dataStr) {
     return avg;
 }
 
-void TSP2_tests::addSeriesAvg(double avgTime, double avgResult, std::string instanceName, Algorithms alg) {
-    TSP2_result result{};
+void ErrorTests::addSeriesAvg(double avgTime, double avgResult, std::string instanceName, Algorithms alg) {
+    ErrorResult result{};
 
     //Creating result object for specific structure and operation
     result.avgTime = avgTime;
@@ -135,7 +139,7 @@ void TSP2_tests::addSeriesAvg(double avgTime, double avgResult, std::string inst
     }
 }
 
-void TSP2_tests::saveResultList(const std::string &algorithm, Algorithms alg) const {
+void ErrorTests::saveResultList(const std::string &algorithm, Algorithms alg) const {
     //Creating write file path
     std::string path = outputPath + algorithm + ".txt";
 
@@ -153,7 +157,7 @@ void TSP2_tests::saveResultList(const std::string &algorithm, Algorithms alg) co
     }
 }
 
-void TSP2_tests::loadInstances() {
+void ErrorTests::loadInstances() {
     if (!instances.empty()) {
         return;
     }
