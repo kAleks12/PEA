@@ -6,8 +6,36 @@
 #include <fstream>
 #include <cmath>
 
+std::map<std::string, int> *FileManager::solutions = nullptr;
 int *FileManager::data = nullptr;
 size_t FileManager::verticesNum = -1;
+
+void FileManager::readSolutions(const std::string &fileName) {
+    //Deleting old data
+    delete[] solutions;
+
+    //Opening source file
+    std::ifstream srcFile(fileName);
+
+    //Checking whether file exists
+    if (!srcFile.is_open()) {
+        return;
+    }
+
+    solutions = new std::map<std::string, int>;
+
+    while (!srcFile.eof()) {
+        std::string instanceName;
+        int optimalCost;
+
+        srcFile >> instanceName >> optimalCost;
+        auto row = new std::pair<std::string, int>(instanceName, optimalCost);
+        solutions->insert(*row);
+        delete row;
+    }
+
+    srcFile.close();
+}
 
 void FileManager::readData(const std::string &fileName) {
     //Deleting old data
@@ -36,11 +64,21 @@ void FileManager::readData(const std::string &fileName) {
     srcFile.close();
 }
 
-void FileManager::saveData(const std::string &path, const std::list<OpResult> &resultData) {
+void FileManager::saveData(const std::string &path, const std::list<TimeResult> &resultData) {
     std::ofstream saveFile(path);
 
-    for (const OpResult &result: resultData) {
+    for (const TimeResult &result: resultData) {
         saveFile << result.instanceSize << ";" << result.time << "\n";
+    }
+
+    saveFile.close();
+}
+
+void FileManager::saveData(const std::string &path, const std::list<ErrorResult> &resultData) {
+    std::ofstream saveFile(path);
+
+    for (const ErrorResult &result: resultData) {
+        saveFile << result.instanceName << ";" << result.avgResult << ";" << result.avgTime << "\n";
     }
 
     saveFile.close();

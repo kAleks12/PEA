@@ -2,18 +2,21 @@
 // Created by kacpe on 04.11.2022.
 //
 
-#include "../../../inc/utils/testing/Tests.h"
+#include "../../../inc/utils/testing/TimeTests.h"
 #include "../../../inc/utils/FileManager.h"
 #include "../../../inc/utils/testing/MatrixGenerator.h"
 #include "../../../inc/algorithms/BranchAndBound.h"
 #include "../../../inc/algorithms/BruteForce.h"
 #include "../../../inc/algorithms/DynamicProgramming.h"
+#include "../../../inc/algorithms/SimulatedAnnealing.h"
+#include "../../../inc/algorithms/TabuSearch.h"
 #include <iostream>
+#include <unistd.h>
 
-AdjacencyMatrix *Tests::graph = nullptr;
+AdjacencyMatrix *TimeTests::graph = nullptr;
 
 //Function that calculates average time for provided list with intervals
-double Tests::calcAvg(const std::list<double> &dataStr) {
+double TimeTests::calcAvg(const std::list<double> &dataStr) {
     double avg = 0;
 
     //Calculating average from provided vector's elements
@@ -26,8 +29,8 @@ double Tests::calcAvg(const std::list<double> &dataStr) {
 }
 
 //Function that creates single series result and adds it to adequate list
-void Tests::addSeriesAvg(double avg, int instanceSize, Algorithms alg) {
-    OpResult result{};
+void TimeTests::addSeriesAvg(double avg, int instanceSize, Algorithms alg) {
+    TimeResult result{};
 
     //Creating result object for specific structure and operation
     result.time = avg;
@@ -46,71 +49,25 @@ void Tests::addSeriesAvg(double avg, int instanceSize, Algorithms alg) {
         case BB:
             bbResults.push_back(result);
             break;
+        case SA:
+            saResults.push_back(result);
+            break;
+        case TS:
+            tsResults.push_back(result);
+            break;
     }
 }
 
 //Functions that tests all algorithms for matrix representation
-void Tests::test(int start, int end) {
-    //Creating operational variables
-    std::list<double> dpIntervals;
-    std::list<double> bbIntervals;
-    std::list<double> bfIntervals;
-
-    BranchAndBound bbEntity;
-    BruteForce bfEntity;
-    DynamicProgramming dpEntity;
-
-    //Testing 7 different instanceSizes
-    for (int vertices = start; vertices <= end; vertices++) {
-        //100 times
-        for (int i = 0; i < sampleSize; ++i) {
-            //Generating new graph represented by matrix
-            MatrixGenerator::createGraph(vertices, costRange);
-            graph = MatrixGenerator::graph;
-
-
-            //Measuring brute force algorithm
-            timer.start();
-            //bfEntity.testExecute(*graph);
-            bfIntervals.push_back(timer.getTime(MICROSECONDS));
-
-            //Measuring dynamic programming algorithm
-            timer.start();
-            //dpEntity.testExecute(*graph);
-            dpIntervals.push_back(timer.getTime(MICROSECONDS));
-
-            //Measuring branch and bound algorithm
-            timer.start();
-            bbEntity.testExecute(*graph);
-            bbIntervals.push_back(timer.getTime(MICROSECONDS));
-        }
-
-        //Creating series results for current density
-        addSeriesAvg(calcAvg(bfIntervals), vertices, Algorithms::BF);
-        addSeriesAvg(calcAvg(bbIntervals), vertices, Algorithms::BB);
-        addSeriesAvg(calcAvg(dpIntervals), vertices, Algorithms::DP);
-
-        //Clearing intervals for next density
-        bbIntervals.clear();
-        dpIntervals.clear();
-        bfIntervals.clear();
-
-        std::cout << "Done instance size -  " << vertices << "\n";
-    }
-
-    //Saving results of all algorithms for current vertices number
-    saveResultList("brute_force", Algorithms::BF);
-    saveResultList("branch_and_bound", Algorithms::BB);
-    saveResultList("dynamic_programming", Algorithms::DP);
-
-
-    //Clearing results for next vertices number
-    dpResults.clear();
-    bbResults.clear();
-    bfResults.clear();
+void TimeTests::testAll(int start, int end) {
+    testBF(start, end);
+    testDP(start, end);
+    testBB(start, end);
 }
 
-void Tests::testBB(int start, int end) {
+void TimeTests::testBB(int start, int end) {
+    mkdir(basePath.c_str());
+
     //Creating operational variables
     std::list<double> intervals;
 
@@ -147,7 +104,9 @@ void Tests::testBB(int start, int end) {
     bbResults.clear();
 }
 
-void Tests::testDP(int start, int end) {
+void TimeTests::testDP(int start, int end) {
+    mkdir(basePath.c_str());
+
     //Creating operational variables
     std::list<double> intervals;
 
@@ -184,7 +143,9 @@ void Tests::testDP(int start, int end) {
     dpResults.clear();
 }
 
-void Tests::testBF(int start, int end) {
+void TimeTests::testBF(int start, int end) {
+    mkdir(basePath.c_str());
+
     //Creating operational variables
     std::list<double> intervals;
 
@@ -205,7 +166,7 @@ void Tests::testBF(int start, int end) {
         }
 
         //Creating series results for current density
-        addSeriesAvg(calcAvg(intervals), vertices, Algorithms::DP);
+        addSeriesAvg(calcAvg(intervals), vertices, Algorithms::BF);
 
         //Clearing intervals for next density
         intervals.clear();
@@ -214,15 +175,92 @@ void Tests::testBF(int start, int end) {
     }
 
     //Saving results of all algorithms for current vertices number
-    saveResultList("dynamic_programming", Algorithms::BF);
+    saveResultList("brute_force", Algorithms::BF);
 
 
     //Clearing results for next vertices number
     bfResults.clear();
 }
 
+void TimeTests::testSA(int start, int end, int jump) {
+    mkdir(basePath.c_str());
+
+    //Creating operational variables
+    std::list<double> intervals;
+
+    SimulatedAnnealing saEntity;
+
+    //Testing 7 different instanceSizes
+    for (int vertices = start; vertices <= end; vertices += jump) {
+        //100 times
+        for (int i = 0; i < sampleSize; ++i) {
+            //Generating new graph represented by matrix
+            MatrixGenerator::createGraph(vertices, costRange);
+            graph = MatrixGenerator::graph;
+
+            //Measuring branch and bound algorithm
+            timer.start();
+            saEntity.testExecute(*graph);
+            intervals.push_back(timer.getTime(MILLISECONDS));
+        }
+
+        //Creating series results for current density
+        addSeriesAvg(calcAvg(intervals), vertices, Algorithms::SA);
+
+        //Clearing intervals for next density
+        intervals.clear();
+
+        std::cout << "Done instance size -  " << vertices << "\n";
+    }
+
+    //Saving results of all algorithms for current vertices number
+    saveResultList("simulated_annealing", Algorithms::SA);
+
+
+    //Clearing results for next vertices number
+    saResults.clear();
+}
+
+void TimeTests::testTS(int start, int end, int jump) {
+    mkdir(basePath.c_str());
+
+    //Creating operational variables
+    std::list<double> intervals;
+
+    TabuSearch tsEntity;
+
+    //Testing 7 different instanceSizes
+    for (int vertices = start; vertices <= end; vertices += jump) {
+        for (int i = 0; i < sampleSize; ++i) {
+            //Generating new graph represented by matrix
+            MatrixGenerator::createGraph(vertices, costRange);
+            graph = MatrixGenerator::graph;
+
+            //Measuring branch and bound algorithm
+            timer.start();
+            tsEntity.testExecute(*graph);
+            intervals.push_back(timer.getTime(MILLISECONDS));
+        }
+
+        //Creating series results for current density
+        addSeriesAvg(calcAvg(intervals), vertices, Algorithms::TS);
+
+        //Clearing intervals for next density
+        intervals.clear();
+
+        std::cout << "Done instance size -  " << vertices << "\n";
+    }
+
+    //Saving results of all algorithms for current vertices number
+    saveResultList("tabu_search", Algorithms::TS);
+
+
+    //Clearing results for next vertices number
+    tsResults.clear();
+}
+
 //Functions that saves measurements for a single algorithm to .txt file
-void Tests::saveResultList(const std::string &algorithm, Algorithms alg) const {
+void TimeTests::saveResultList(const std::string &algorithm, Algorithms alg) const {
     //Creating write file path
     std::string path = basePath + algorithm + ".txt";
 
@@ -240,6 +278,14 @@ void Tests::saveResultList(const std::string &algorithm, Algorithms alg) const {
         case DP:
             //Printing opResult objects for each tested operation to the file
             FileManager::saveData(path, dpResults);
+            break;
+        case SA:
+            //Printing opResult objects for each tested operation to the file
+            FileManager::saveData(path, saResults);
+            break;
+        case TS:
+            //Printing opResult objects for each tested operation to the file
+            FileManager::saveData(path, tsResults);
             break;
     }
 }

@@ -3,7 +3,7 @@ project(pea)
 
 set(CMAKE_CXX_STANDARD 23)
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++ -static-libgcc -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive")
-
+link_libraries(stdc++fs)
 add_executable(
         pea src/main.cpp
 
@@ -27,11 +27,17 @@ add_executable(
         inc/utils/FileManager.h
         src/utils/FileManager.cpp
 
+        src/utils/RandomGenerator.cpp
+        inc/utils/RandomGenerator.h
+
         inc/utils/testing/MatrixGenerator.h
         src/utils/testing/MatrixGenerator.cpp
 
-        inc/utils/testing/Tests.h
-        src/utils/testing/Tests.cpp
+        inc/utils/testing/TimeTests.h
+        src/utils/testing/TimeTests.cpp
+
+        inc/utils/testing/ErrorTests.h
+        src/utils/testing/ErrorTests.cpp
 
         inc/algorithms/Algorithm.h
 
@@ -44,4 +50,9 @@ add_executable(
         inc/algorithms/DynamicProgramming.h
         src/algorithms/DynamicProgramming.cpp
 
-)
+        inc/algorithms/SimulatedAnnealing.h
+        src/algorithms/SimulatedAnnealing.cpp
+
+        inc/algorithms/TabuSearch.h
+        src/algorithms/TabuSearch.cpp
+        )

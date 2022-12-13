@@ -14,6 +14,8 @@ class Menu {
 
 public:
     static void initMenu(); //display initial menu
+    static void tsp1Menu();
+    static void tsp2Menu();
 
     static void readGraph(); //display graph creation wizard
     static void generateGraph(); //display random graph generation wizard

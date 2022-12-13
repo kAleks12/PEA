@@ -1,0 +1,9 @@
+tsp_17.txt 39
+tsp_26.txt 937
+tsp_34.txt 1286
+tsp_39.txt 1530
+tsp_45.txt 1613
+tsp_53.txt 6905
+tsp_65.txt 1839
+tsp_70.txt 38673
+tsp_71.txt 1950

@@ -13,5 +13,7 @@ enum TimeUnit {
 enum Algorithms {
     BF, //Brute force
     DP, //Dynamic programming
-    BB //Branch and bound
+    BB, //Branch and bound
+    SA, //Simulated Annealing
+    TS //Tabu Search
 };

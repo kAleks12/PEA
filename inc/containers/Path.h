@@ -20,6 +20,7 @@ public:
     void addVertex(int vertex, int vertexCost); //adds vertex to path and updates cost with vertexCost
     void addVertex(int vertex);
     void setCost(int totalCost);
+    int getCost();
 
     std::string toString();
 };

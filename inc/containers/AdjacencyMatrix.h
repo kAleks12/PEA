@@ -19,6 +19,7 @@ class AdjacencyMatrix {
     void copy(int **existingMatrix);
 
 public:
+    AdjacencyMatrix();
     AdjacencyMatrix(const size_t &verticesNumber, const int *edges);
     AdjacencyMatrix(const size_t &verticesNumber, int **distances);
     AdjacencyMatrix(const AdjacencyMatrix &existingMatrix);
@@ -35,7 +36,7 @@ public:
         return this->matrix[origin][destination];
     }
 
-    size_t getCitiesNumber() const {
+    int getCitiesNumber() const {
         return this->citiesNumber;
     }
 };
