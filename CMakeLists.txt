@@ -3,7 +3,7 @@ project(pea)
 
 set(CMAKE_CXX_STANDARD 23)
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++ -static-libgcc -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive")
-
+link_libraries(stdc++fs)
 add_executable(
         pea src/main.cpp
 
@@ -52,6 +52,7 @@ add_executable(
 
         inc/algorithms/SimulatedAnnealing.h
         src/algorithms/SimulatedAnnealing.cpp
+
         inc/algorithms/TabuSearch.h
         src/algorithms/TabuSearch.cpp
         )
