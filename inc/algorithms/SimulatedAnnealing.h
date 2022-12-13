@@ -9,8 +9,10 @@
 class SimulatedAnnealing : public Algorithm {
     const double heat;
     const double coolingRate;
-    DynamicArray<int> bestSolution;
+    DynamicArray<int> currentSolution;
+    int currentCost;
     int bestCost;
+    DynamicArray<int> bestSolution;
 
     static int calculateCost(AdjacencyMatrix &graph, DynamicArray<int> &vertices);
     static bool makeDecision(int delta, double temperature);

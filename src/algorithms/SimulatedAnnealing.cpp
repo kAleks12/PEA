@@ -46,6 +46,8 @@ Path *SimulatedAnnealing::execute(AdjacencyMatrix &matrix) {
     fullShuffle(vertices);
 
     int cost = calculateCost(matrix, vertices);
+    currentCost = cost;
+    currentSolution = vertices;
     bestCost = cost;
     bestSolution = vertices;
     double currHeat = heat;
@@ -62,9 +64,14 @@ Path *SimulatedAnnealing::execute(AdjacencyMatrix &matrix) {
             vertices = newVertices;
             currHeat *= coolingRate;
 
-            if (newCost < bestCost) {
-                bestCost = newCost;
-                bestSolution = newVertices;
+            if (newCost < currentCost) {
+                currentCost = newCost;
+                currentSolution = newVertices;
+            }
+
+            if(currentCost < bestCost) {
+                bestCost = currentCost;
+                bestSolution = currentSolution;
             }
         }
     }
@@ -90,6 +97,16 @@ void SimulatedAnnealing::testExecute(AdjacencyMatrix &matrix) {
             cost = newCost;
             vertices = newVertices;
             currHeat *= 0.999;
+
+            if (newCost < currentCost) {
+                currentCost = newCost;
+                currentSolution = newVertices;
+            }
+
+            if(currentCost < bestCost) {
+                bestCost = currentCost;
+                bestSolution = currentSolution;
+            }
         }
     }
 }

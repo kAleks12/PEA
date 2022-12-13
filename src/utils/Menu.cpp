@@ -212,11 +212,44 @@ void Menu::runAlgorithm(Algorithms algorithm) {
         return;
     }
 
+    if (algorithm == TS) {
+        int size;
+        int iterations;
+        int neighbourSize;
+        std::cout << "Please enter size of tabu list: ";
+        std::cin >> size;
+
+        std::cout << "Please enter number of iterations: ";
+        std::cin >> iterations;
+
+        std::cout << "Please enter size of neighbour list: ";
+        std::cin >> neighbourSize;
+
+        TabuSearch tsEntity(iterations, size, neighbourSize);
+        std::cout << tsEntity.execute(*graph)->toString() << std::endl;
+        system("Pause");
+        return;
+    }
+
+    if (algorithm == SA) {
+        int temperature;
+        double coolingRate;
+
+        std::cout << "Please enter starting temperature: ";
+        std::cin >> temperature;
+
+        std::cout << "Please enter cooling rate: ";
+        std::cin >> coolingRate;
+
+        SimulatedAnnealing saEntity(temperature, coolingRate);
+        std::cout << saEntity.execute(*graph)->toString() << std::endl;
+        system("Pause");
+        return;
+    }
+
     BruteForce bfEntity;
-    DynamicProgramming dpEntity;
     BranchAndBound bbEntity;
-    SimulatedAnnealing saEntity;
-    TabuSearch tsEntity;
+    DynamicProgramming dpEntity;
 
     switch (algorithm) {
         case BF:
@@ -231,14 +264,6 @@ void Menu::runAlgorithm(Algorithms algorithm) {
 
         case BB:
             std::cout << bbEntity.execute(*graph)->toString() << std::endl;
-            system("Pause");
-            break;
-        case SA:
-            std::cout << saEntity.execute(*graph)->toString() << std::endl;
-            system("Pause");
-            break;
-        case TS:
-            std::cout << tsEntity.execute(*graph)->toString() << std::endl;
             system("Pause");
             break;
     }
