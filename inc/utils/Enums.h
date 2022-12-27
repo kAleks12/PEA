@@ -17,3 +17,12 @@ enum Algorithms {
     SA, //Simulated Annealing
     TS //Tabu Search
 };
+
+enum MutationType {
+    Swap,
+    Insert
+};
+
+enum CrossoverType {
+    PMX
+};

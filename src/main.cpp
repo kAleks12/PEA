@@ -11,9 +11,17 @@
 #include "../inc/utils/testing/MatrixGenerator.h"
 #include "../inc/algorithms/TabuSearch.h"
 #include "../inc/utils/testing/ErrorTests.h"
+#include "../inc/containers/LiteDynamicArray.h"
+#include "../inc/containers/Member.h"
+#include "../inc/algorithms/Genetic.h"
 
 #define var auto
 
 int main() {
-    Menu::initMenu();
+//    Menu::initMenu();
+    FileManager::readData("message.txt");
+    auto matrix = new AdjacencyMatrix(FileManager::verticesNum, FileManager::data);
+    Genetic entity;
+
+    std::cout  << entity.execute(*matrix)->toString() << std::endl;
 }

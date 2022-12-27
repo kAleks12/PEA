@@ -55,4 +55,4 @@ add_executable(
 
         inc/algorithms/TabuSearch.h
         src/algorithms/TabuSearch.cpp
-        )
+        inc/algorithms/Genetic.h src/algorithms/Genetic.cpp inc/containers/Member.h src/containers/LiteDynamicArray.tpp inc/containers/LiteDynamicArray.h)
