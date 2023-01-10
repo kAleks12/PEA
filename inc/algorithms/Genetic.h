@@ -1,59 +1,55 @@
 #pragma once
 
 #include "Algorithm.h"
-#include "../containers/Member.h"
-#include "../../inc/containers/LiteDynamicArray.h"
-#include "../../src/containers/LiteDynamicArray.tpp"
 #include "../utils/Enums.h"
-
-
-#include <vector>
-#include <algorithm>
+#include "../containers/LiteDynamicArray.h"
+#include "../../src/containers/LiteDynamicArray.tpp"
 
 class Genetic : public Algorithm {
-    double mutationProbability = 1;
-    double crossoverProbability = 1;
-    size_t populationSize = 400; //TODO swap for ratio based on instance size
-    MutationType mutationType = MutationType::Insert;
-    int iterationNumber = 10000;
-    int xxx = 0.25 * iterationNumber; //TODO change name
-
-
-    DynamicArray<int> swapRandomPair(const DynamicArray<int> &buffer);
-    void swapPair(DynamicArray<int> &buffer, int first, int second);
-    int calculatePathCost(const AdjacencyMatrix &graph, const DynamicArray<int> &path);
-
-    void generateFirstPopulation(const AdjacencyMatrix &graph, LiteDynamicArray<Member> &emptyPopulation);
-    void crossover(LiteDynamicArray<Member> &oldPopulation, LiteDynamicArray<Member> &newPopulation,
-                   const AdjacencyMatrix &graph);
-    void mutate(LiteDynamicArray<Member> &newPopulation);
-    DynamicArray<int> performPMX(DynamicArray<int> &firstParent, DynamicArray<int> &secondParent);
-    DynamicArray<int> calcMember(const DynamicArray<int> &startBuffer);
-
 public:
+    Path *execute(AdjacencyMatrix &matrix) override;
+    void testExecute(AdjacencyMatrix &matrix) override;
     Genetic() = default;
-    Genetic(double mutationProbability, double crossoverProbability, size_t populationSize,
-            MutationType mutationType, int iterationNumber, int xxx) :
-            mutationProbability(mutationProbability), crossoverProbability(crossoverProbability),
-            populationSize(populationSize), mutationType(mutationType),
-            iterationNumber(iterationNumber), xxx(xxx) {}
 
-    void setIterationNumber(int newNumber) {
-        iterationNumber = newNumber;
-    }
-    void setPopulationSize(size_t newSize) {
-        populationSize = newSize;
-    }
-    void setMutationType(MutationType newType) {
-        mutationType = newType;
-    }
-    void setMutationProbability(double newProbability) {
-        mutationProbability = newProbability;
-    }
-    void setCrossoverProbability(double newProbability) {
-        crossoverProbability = newProbability;
-    }
+private:
+    int calculateCost(AdjacencyMatrix &matrix, LiteDynamicArray <size_t> &vertices);
 
-    Path *execute(AdjacencyMatrix &graph) override;
-    void testExecute(AdjacencyMatrix &graph) override;
+    void updateBestSolution(AdjacencyMatrix &matrix,
+                            LiteDynamicArray <size_t> &current, LiteDynamicArray <size_t> &candidate, size_t &stopSize);
+
+    void generateIndexes(size_t &firstIndex, size_t &secondIndex, size_t verticesNumber);
+
+    void mutation(LiteDynamicArray <size_t> &vertices);
+
+    void swapMutation(LiteDynamicArray <size_t> &vertices);
+
+    void insertMutation(LiteDynamicArray <size_t> &vertices);
+
+    void invertMutation(LiteDynamicArray <size_t> &vertices);
+
+    void scrambleMutation(LiteDynamicArray <size_t> &vertices);
+
+    LiteDynamicArray <size_t> crossover(LiteDynamicArray <size_t> &firstParent, LiteDynamicArray <size_t> &secondParent);
+
+    LiteDynamicArray <size_t> getInitialSolution(size_t verticesNumber);
+
+    LiteDynamicArray <size_t> OXCrossover(LiteDynamicArray <size_t> &firstParent, LiteDynamicArray <size_t> &secondParent);
+
+    void
+    updatePopulation(AdjacencyMatrix &matrix, LiteDynamicArray <LiteDynamicArray<size_t>> &population, LiteDynamicArray <LiteDynamicArray<size_t>> &candidates);
+
+    size_t partitionPopulation(LiteDynamicArray <LiteDynamicArray<size_t>> &population, LiteDynamicArray<size_t> &costs, int low, int high);
+
+    void sortPopulation(LiteDynamicArray <LiteDynamicArray<size_t>> &population, LiteDynamicArray<size_t> &costs, int low, int high);
+
+    MutationType mutationType = MutationType::Invert;
+    CrossoverType crossoverType = CrossoverType::OX;
+    float mutationRate = 0.5;
+    float crossoverRate = 0.5;
+    size_t stopSize = 1000;
+    size_t populationSize = 200;
+    size_t populationNumber = 3000;
+    size_t eliteSize = 0.5 * populationSize;
+    size_t alphaSize = 0.1 * populationSize;
 };
+    
