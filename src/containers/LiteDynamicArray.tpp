@@ -98,6 +98,33 @@ void LiteDynamicArray<T>::addBack(const T &val) {
 }
 
 template<typename T>
+void LiteDynamicArray<T>::add(const T &val, int position) {
+    //Creating new head
+    T *newHead = new T[this->size + 1];
+
+    //Restoring elements from the old table
+    if (this->size > 0) {
+        for (int i = 0; i < position; i++) {
+            newHead[i] = this->head[i];
+        }
+    }
+
+    //Setting new element
+    newHead[position] = val;
+
+
+    for (int i = position + 1; i <= this->size; i++) {
+        newHead[i] = this->head[i - 1];
+    }
+
+
+    //Deleting old head and swapping it for the new one
+    delete[] this->head;
+    this->head = newHead;
+    this->size++;
+}
+
+template<typename T>
 void LiteDynamicArray<T>::addFront(const T &val) {
     //Creating new head
     T *newHead = new T[this->size + 1];
@@ -267,41 +294,5 @@ void LiteDynamicArray<T>::swap(int index1, int index2) {
     head[index2] = tmp;
 }
 
-template<typename T>
-void LiteDynamicArray<T>::sort() {
-    quickSort(0, size - 1);
-}
-
-template<typename T>
-void LiteDynamicArray<T>::quickSort(int low, int high) {
-    if (low < high) {
-        /* pi is partitioning index, arr[p] is now
-        at right place */
-        int pi = partition(low, high);
-
-        // Separately sort elements before
-        // partition and after partition
-        quickSort(low, pi - 1);
-        quickSort(pi + 1, high);
-    }
-}
-
-template<typename T>
-int LiteDynamicArray<T>::partition(int low, int high) {
-    T pivot = head[high]; // pivot
-    int i = (low - 1); // Index of smaller element and indicates
-    // the right position of pivot found so far
-
-    for (int j = low; j <= high - 1; j++) {
-        // If current element is smaller than the pivot
-        if (head[j] < pivot) {
-            i++; // increment index of smaller element
-            swap(i, j);
-        }
-    }
-    swap(i + 1, high);
-    return (i + 1);
-}
-
 template
-class LiteDynamicArray<Member>;
+class LiteDynamicArray<LiteDynamicArray<size_t>>;

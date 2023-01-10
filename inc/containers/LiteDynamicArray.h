@@ -31,6 +31,7 @@ public:
     void swap(int index1, int index2); //Swap index 1 with index 2
     void addBack(const T &val); //Add val at the end of the table
     void addFront(const T &val); //Add val at the beginning of the table
+    void add(const T &val, int position); //Add val at the beginning of the table
     void removeBack(); //Remove element from the end of the table
     void removeFront(); //Remove element from the front of the table
     void remove(const size_t &position); //Remove element from the front of the table
