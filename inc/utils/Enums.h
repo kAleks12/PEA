@@ -20,9 +20,12 @@ enum Algorithms {
 
 enum MutationType {
     Swap,
-    Insert
+    Insert,
+    Invert,
+    Scramble
 };
 
 enum CrossoverType {
-    PMX
+    PMX,
+    OX
 };
