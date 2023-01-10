@@ -4,245 +4,117 @@
 #include <stdexcept>
 #include <iostream>
 
-Path *Genetic::execute(AdjacencyMatrix &matrix) {
-    LiteDynamicArray <LiteDynamicArray<size_t>> currentPopulation;
-    LiteDynamicArray<size_t> currentCosts;
-    int verticesNumber = matrix.getCitiesNumber();
+Path *Genetic::execute(AdjacencyMatrix &graph) {
+    LiteDynamicArray<Member> currentPopulation;
+    int verticesNumber = graph.getCitiesNumber();
     stopSize = verticesNumber * 10;
 
     while (currentPopulation.getSize() < populationSize) {
-        LiteDynamicArray<size_t> solution = this->getInitialSolution(verticesNumber);
-        currentPopulation.addBack(solution);
-        currentCosts.addBack(this->calculateCost(matrix, solution));
+        LiteDynamicArray<size_t> solution = getInitialSolution(verticesNumber);
+        Member newMember(solution, graph.getPathCost(solution));
+        currentPopulation.addBack(newMember);
     }
 
-    this->sortPopulation(currentPopulation, currentCosts, 0, currentCosts.getSize() - 1);
-    LiteDynamicArray <size_t> bestSolution = currentPopulation[0];
-
+    sortPopulation(currentPopulation, 0, currentPopulation.getSize() - 1);
+    Member bestSolution = currentPopulation[0];
     size_t currentStopSize = 0;
-    for (int i = 0; i < populationNumber; i++) {
-        LiteDynamicArray <LiteDynamicArray<size_t>> newPopulation;
-        LiteDynamicArray<size_t> newCosts;
 
-        for (int i = 0; i < alphaSize; i++) {
-            newPopulation.addBack(currentPopulation[i]);
-            newCosts.addBack(this->calculateCost(matrix, currentPopulation[i]));
+    for (int i = 0; i < populationNumber; i++) {
+        LiteDynamicArray<Member> newPopulation;
+
+        for (int j = 0; j < alphaSize; j++) {
+            newPopulation.addBack(currentPopulation[j]);
         }
 
         while (newPopulation.getSize() < populationSize) {
-
             size_t firstIndex;
             size_t secondIndex;
-            this->generateIndexes(firstIndex, secondIndex, eliteSize);
+            RandomGenerator::generatePair(firstIndex, secondIndex, eliteSize);
 
-            auto firstParent = currentPopulation[firstIndex];
-            auto secondParent = currentPopulation[secondIndex];
+            Member firstParent = currentPopulation[firstIndex];
+            Member secondParent = currentPopulation[secondIndex];
 
-            auto firstChild = this->crossover(firstParent, secondParent);
-            auto secondChild = this->crossover(secondParent, firstParent);
+            LiteDynamicArray<size_t> firstChild = crossover(firstParent.path, secondParent.path);
+            LiteDynamicArray<size_t> secondChild = crossover(secondParent.path, firstParent.path);
 
-            this->mutation(firstChild);
-            this->mutation(secondChild);
+            mutate(firstChild);
+            mutate(secondChild);
 
-            newPopulation.addBack(firstChild);
-            newCosts.addBack(this->calculateCost(matrix, firstChild));
-            newPopulation.addBack(secondChild);
-            newCosts.addBack(this->calculateCost(matrix, secondChild));
+            Member firstMember(firstChild, graph.getPathCost(firstChild));
+            Member secondMember(secondChild, graph.getPathCost(secondChild));
+
+            newPopulation.addBack(firstMember);
+            newPopulation.addBack(secondMember);
         }
 
-        this->sortPopulation(newPopulation, newCosts, 0, currentCosts.getSize() - 1);
-        this->updateBestSolution(matrix, bestSolution, newPopulation[0], currentStopSize);
+        sortPopulation(newPopulation, 0, currentPopulation.getSize() - 1);
+        Member candidate = newPopulation.at(0);
+
+        if( candidate.cost < bestSolution.cost) {
+            stopSize = 0;
+            bestSolution = candidate;
+        }
 
         currentPopulation = newPopulation;
-        std::cout << i << ": " << this->calculateCost(matrix, bestSolution) << std::endl;
 
-        if (currentStopSize > stopSize)
+        if (currentStopSize > stopSize) {
             break;
+        }
     }
 
-    int bestCost = this->calculateCost(matrix, bestSolution);
-    return new Path(bestSolution, bestCost);
+    return new Path(bestSolution.path, bestSolution.cost);
 }
 
 void Genetic::testExecute(AdjacencyMatrix &matrix) {
-    LiteDynamicArray <LiteDynamicArray<size_t>> currentPopulation;
-    LiteDynamicArray<size_t> currentCosts;
-    int verticesNumber = matrix.getCitiesNumber();
-    stopSize = verticesNumber * 10;
-
-    while (currentPopulation.getSize() < populationSize) {
-        LiteDynamicArray<size_t> solution = this->getInitialSolution(verticesNumber);
-        currentPopulation.addBack(solution);
-        currentCosts.addBack(this->calculateCost(matrix, solution));
-    }
-
-    this->sortPopulation(currentPopulation, currentCosts, 0, currentCosts.getSize() - 1);
-    LiteDynamicArray <size_t> bestSolution = currentPopulation[0];
-
-    size_t currentStopSize = 0;
-    for (int i = 0; i < populationNumber; i++) {
-        LiteDynamicArray <LiteDynamicArray<size_t>> newPopulation;
-        LiteDynamicArray<size_t> newCosts;
-
-        for (int i = 0; i < alphaSize; i++) {
-            newPopulation.addBack(currentPopulation[i]);
-            newCosts.addBack(this->calculateCost(matrix, currentPopulation[i]));
-        }
-
-        while (newPopulation.getSize() < populationSize) {
-
-            size_t firstIndex;
-            size_t secondIndex;
-            this->generateIndexes(firstIndex, secondIndex, eliteSize);
-
-            auto firstParent = currentPopulation[firstIndex];
-            auto secondParent = currentPopulation[secondIndex];
-
-            auto firstChild = this->crossover(firstParent, secondParent);
-            auto secondChild = this->crossover(secondParent, firstParent);
-
-            this->mutation(firstChild);
-            this->mutation(secondChild);
-
-            newPopulation.addBack(firstChild);
-            newCosts.addBack(this->calculateCost(matrix, firstChild));
-            newPopulation.addBack(secondChild);
-            newCosts.addBack(this->calculateCost(matrix, secondChild));
-        }
-
-        this->sortPopulation(newPopulation, newCosts, 0, currentCosts.getSize() - 1);
-        this->updateBestSolution(matrix, bestSolution, newPopulation[0], currentStopSize);
-
-        currentPopulation = newPopulation;
-        std::cout << i << ": " << this->calculateCost(matrix, bestSolution) << std::endl;
-
-        if (currentStopSize > stopSize)
-            break;
-    }
-
-    int bestCost = this->calculateCost(matrix, bestSolution);
 }
 
-int Genetic::calculateCost(AdjacencyMatrix &graph, LiteDynamicArray <size_t> &path) {
-    int result = 0;
-    int iterationNumber = graph.getCitiesNumber() - 1;
+void Genetic::mutate(LiteDynamicArray<size_t> &vertices) {
+    double shouldMutate = RandomGenerator::getDouble(1);
 
-    for (int i = 0; i < iterationNumber; i++) {
-        result += graph.getCost(path[i], path[i + 1]);
-    }
-    result += graph.getCost(path[iterationNumber], path[0]);
-
-    return result;
-}
-
-void Genetic::updateBestSolution(AdjacencyMatrix &matrix,
-                                 LiteDynamicArray <size_t> &current, LiteDynamicArray <size_t> &candidate,
-                                 size_t &stopSize) {
-    int currentBestCost = this->calculateCost(matrix, current);
-    int candidateCost = this->calculateCost(matrix, candidate);
-    stopSize++;
-
-    if (candidateCost < currentBestCost) {
-        current = candidate;
-        stopSize = 0;
-    }
-}
-
-void Genetic::generateIndexes(size_t &firstIndex,
-                              size_t &secondIndex, size_t verticesNumber) {
-    do {
-        firstIndex = RandomGenerator::getInt(0, verticesNumber - 2);
-        secondIndex = RandomGenerator::getInt(0, verticesNumber - 1);
-    } while (firstIndex >= secondIndex);
-}
-
-void Genetic::mutation(LiteDynamicArray <size_t> &vertices) {
-    double value = RandomGenerator::getDouble(1);
-
-    if (value > mutationRate)
+    if (shouldMutate > mutationRate) {
         return;
+    }
 
     switch (mutationType) {
         case MutationType::Invert:
-            this->invertMutation(vertices);
+            GeneticHelper::invertMutation(vertices);
             break;
+
         case MutationType::Scramble:
-            this->scrambleMutation(vertices);
+            GeneticHelper::scrambleMutation(vertices);
             break;
+
         case MutationType::Swap:
-            this->swapMutation(vertices);
+            GeneticHelper::swapMutation(vertices);
             break;
+
         case MutationType::Insert:
-            this->insertMutation(vertices);
+            GeneticHelper::insertMutation(vertices);
             break;
+
         default:
             throw std::invalid_argument("Mutation type not supported");
-            break;
     }
 }
 
-void Genetic::swapMutation(LiteDynamicArray <size_t> &vertices) {
-    size_t firstIndex;
-    size_t secondIndex;
-    this->generateIndexes(firstIndex, secondIndex, vertices.getSize());
-
-    vertices.swap(firstIndex, secondIndex);
-}
-
-void Genetic::insertMutation(LiteDynamicArray <size_t> &vertices) {
-    size_t firstIndex;
-    size_t secondIndex;
-    this->generateIndexes(firstIndex, secondIndex, vertices.getSize());
-
-    auto temp = vertices[secondIndex];
-    vertices.remove(secondIndex);
-    vertices.add(firstIndex, temp);
-}
-
-void Genetic::invertMutation(LiteDynamicArray <size_t> &vertices) {
-    size_t firstIndex;
-    size_t secondIndex;
-    this->generateIndexes(firstIndex, secondIndex, vertices.getSize());
-
-    while (firstIndex < secondIndex) {
-        vertices.swap(firstIndex, secondIndex);
-        firstIndex++;
-        secondIndex--;
-    }
-}
-
-void Genetic::scrambleMutation(LiteDynamicArray <size_t> &vertices) {
-    size_t firstIndex;
-    size_t secondIndex;
-    this->generateIndexes(firstIndex, secondIndex, vertices.getSize());
-
-    int swapNumber = secondIndex - firstIndex;
-
-    for (int i = 0; i < swapNumber; i++) {
-        auto firstSwapIndex = RandomGenerator::getInt(firstIndex, secondIndex);
-        auto secondSwapIndex = RandomGenerator::getInt(firstIndex, secondIndex);
-
-        vertices.swap(firstSwapIndex, secondSwapIndex);
-    }
-}
-
-LiteDynamicArray <size_t>
-Genetic::crossover(LiteDynamicArray <size_t> &firstParent, LiteDynamicArray <size_t> &secondParent) {
+LiteDynamicArray<size_t>
+Genetic::crossover(LiteDynamicArray<size_t> &firstParent, LiteDynamicArray<size_t> &secondParent) {
     double value = RandomGenerator::getDouble(1);
 
-    if (value > crossoverRate)
+    if (value > crossoverRate) {
         return firstParent;
+    }
 
     switch (crossoverType) {
         case CrossoverType::OX:
-            return this->OXCrossover(firstParent, secondParent);
+            return GeneticHelper::OXCrossover(firstParent, secondParent);
         default:
             throw std::invalid_argument("Crossover type not supported");
     }
 }
 
-LiteDynamicArray <size_t> Genetic::getInitialSolution(size_t verticesNumber) {
-    LiteDynamicArray <size_t> vertices;
+LiteDynamicArray<size_t> Genetic::getInitialSolution(size_t verticesNumber) {
+    LiteDynamicArray<size_t> vertices;
     for (int i = 0; i < verticesNumber; i++) {
         vertices.addBack(i);
     }
@@ -250,90 +122,72 @@ LiteDynamicArray <size_t> Genetic::getInitialSolution(size_t verticesNumber) {
     size_t firstIndex;
     size_t secondIndex;
     for (int i = 0; i < verticesNumber; i++) {
-        this->generateIndexes(firstIndex, secondIndex, verticesNumber);
+        RandomGenerator::generatePair(firstIndex, secondIndex, verticesNumber);
         vertices.swap(firstIndex, secondIndex);
     }
 
     return vertices;
 }
 
-LiteDynamicArray <size_t> Genetic::OXCrossover(LiteDynamicArray <size_t> &firstParent,
-                                               LiteDynamicArray <size_t> &secondParent) {
-    LiteDynamicArray <size_t> result;
-    size_t firstIndex;
-    size_t secondIndex;
-    this->generateIndexes(firstIndex, secondIndex, firstParent.getSize());
-
-    for (int i = firstIndex; i < secondIndex; i++) {
-        result.addBack(firstParent[i]);
-    }
-
-    for (int i = secondIndex - 1; i >= 0; i--) {
-        auto vertex = secondParent[i];
-        if (result.contains(vertex))
-            continue;
-
-        result.addFront(vertex);
-    }
-
-    for (int i = secondIndex; i < secondParent.getSize(); i++) {
-        auto vertex = secondParent[i];
-        if (result.contains(vertex))
-            continue;
-
-        result.addBack(vertex);
-    }
-
-    return result;
-}
-
-void Genetic::updatePopulation(AdjacencyMatrix &matrix,
-                               LiteDynamicArray <LiteDynamicArray<size_t>> &population,
-                               LiteDynamicArray <LiteDynamicArray<size_t>> &candidates) {
-    LiteDynamicArray <size_t> bestCandidate = candidates[0];
-    int bestCost = this->calculateCost(matrix, bestCandidate);
-    LiteDynamicArray <size_t> secondBestCandidate = candidates[1];
-
-    for (auto &candidate: candidates) {
-        int cost = this->calculateCost(matrix, candidate);
-        if (cost < bestCost) {
-            secondBestCandidate = bestCandidate;
-            bestCandidate = candidate;
-            bestCost = cost;
-        }
-    }
-
-    population.addBack(bestCandidate);
-    population.addBack(secondBestCandidate);
-}
-
-size_t Genetic::partitionPopulation(LiteDynamicArray <LiteDynamicArray<size_t>> &population, LiteDynamicArray<size_t> &costs,
-                                    int low, int high) {
-    size_t pivot = costs[high];
+size_t Genetic::partitionPopulation(LiteDynamicArray<Member> &population, int low, int high) {
+    size_t pivot = population[high].cost;
     int i = low - 1;
 
     for (int j = low; j < high; j++) {
-        if (costs[j] < pivot) {
+        if (population[j].cost < pivot) {
             i++;
-            costs.swap(i, j);
             population.swap(i, j);
         }
     }
 
-    costs.swap(i + 1, high);
     population.swap(i + 1, high);
 
     return i + 1;
 }
 
-void
-Genetic::sortPopulation(LiteDynamicArray <LiteDynamicArray<size_t>> &population, LiteDynamicArray<size_t> &costs, int low,
-                        int high) {
-    if (low >= high)
+void Genetic::sortPopulation(LiteDynamicArray<Member> &population, int low, int high) {
+    if (low >= high) {
         return;
+    }
 
-    size_t pivot = this->partitionPopulation(population, costs, low, high);
+    size_t pivot = this->partitionPopulation(population, low, high);
 
-    this->sortPopulation(population, costs, low, pivot - 1);
-    this->sortPopulation(population, costs, pivot + 1, high);
+    this->sortPopulation(population, low, pivot - 1);
+    this->sortPopulation(population, pivot + 1, high);
+}
+
+void Genetic::setMutationType(MutationType newType) {
+    this->mutationType = newType;
+}
+
+void Genetic::setCrossoverType(CrossoverType newType) {
+    this->crossoverType = newType;
+}
+
+void Genetic::setMutationRate(float newType) {
+    this->mutationRate = newType;
+}
+
+void Genetic::setCrossoverRate(float newType) {
+    this->crossoverRate = newType;
+}
+
+void Genetic::setStopSize(size_t newSize) {
+    this->stopSize = newSize;
+}
+
+void Genetic::setPopulationSize(size_t newSize) {
+    this->populationSize = newSize;
+}
+
+void Genetic::setPopulationNumber(size_t newNumber) {
+    this->populationNumber = newNumber;
+}
+
+void Genetic::setEliteSize(size_t newSize) {
+    this->eliteSize = newSize;
+}
+
+void Genetic::setAlphaSize(size_t newSize) {
+    this->alphaSize = newSize;
 }

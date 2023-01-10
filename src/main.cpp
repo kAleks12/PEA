@@ -19,7 +19,7 @@
 
 int main() {
 //    Menu::initMenu();
-    FileManager::readData("message.txt");
+    FileManager::readData("tsp_71.txt");
     auto matrix = new AdjacencyMatrix(FileManager::verticesNum, FileManager::data);
     Genetic entity;
 

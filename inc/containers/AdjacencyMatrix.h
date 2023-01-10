@@ -5,6 +5,8 @@
 #pragma once
 
 #include <cstdio>
+#include "LiteDynamicArray.h"
+
 
 class AdjacencyMatrix {
     //Class variables
@@ -27,6 +29,9 @@ public:
     ~AdjacencyMatrix();
 
     void print(); //prints matrix to std::cout
+
+    size_t getPathCost(LiteDynamicArray<size_t> path) const;
+
 
     int **getMatrix() const {
         return this->matrix;

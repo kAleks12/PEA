@@ -10,7 +10,7 @@
 class Member {
 public:
     Member() = default;
-    Member(DynamicArray<int> &path, int cost) : path(path), cost(cost) {};
+    Member(LiteDynamicArray<size_t> &path, int cost) : path(path), cost(cost) {};
 
     bool operator<(const Member &other) const {
         return cost < other.cost;
@@ -24,28 +24,10 @@ public:
         return this->path == other.path;
     }
 
-
-//    friend std::ostream& operator<<(std::ostream& os, const Member& dt);
-
-    int getCost() const {
-        return cost;
-    }
-
-    DynamicArray<int> getPath() const {
-        return path;
-    }
-
-    void setPath(DynamicArray<int> newPath) {
+    void setPath(LiteDynamicArray<size_t> newPath) {
         path = newPath;
     }
 
-private:
-    DynamicArray<int> path;
+    LiteDynamicArray<size_t> path;
     int cost{INT_MAX};
 };
-
-//std::ostream& operator<<(std::ostream& os, const Member& dt)
-//{
-//    os << dt.getPath().toString();
-//    return os;
-//}

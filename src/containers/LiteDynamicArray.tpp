@@ -296,3 +296,6 @@ void LiteDynamicArray<T>::swap(int index1, int index2) {
 
 template
 class LiteDynamicArray<LiteDynamicArray<size_t>>;
+
+template
+class LiteDynamicArray<Member>;
