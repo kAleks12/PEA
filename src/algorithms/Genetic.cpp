@@ -178,6 +178,8 @@ void Genetic::setStopSize(size_t newSize) {
 
 void Genetic::setPopulationSize(size_t newSize) {
     this->populationSize = newSize;
+    this->alphaSize = populationSize*0.1;
+    this->eliteSize = populationSize*0.5;
 }
 
 void Genetic::setPopulationNumber(size_t newNumber) {

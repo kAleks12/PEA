@@ -19,9 +19,18 @@
 
 int main() {
 //    Menu::initMenu();
-    FileManager::readData("tsp_71.txt");
-    auto matrix = new AdjacencyMatrix(FileManager::verticesNum, FileManager::data);
-    Genetic entity;
+//    var fileName = "tsp_152.txt";
+//    FileManager::readData(fileName);
+//    FileManager::readSolutions("solutions.txt");
+//    auto matrix = new AdjacencyMatrix(FileManager::verticesNum, FileManager::data);
+//    Genetic entity;
+//
+//    var result = entity.execute(*matrix);
+//    var bestResult = FileManager::solutions->at(fileName);
+//    std::cout << "Error rate: " << (((float) result->getCost() / bestResult) - 1) * 100.00 << "[%]" << std::endl;
 
-    std::cout  << entity.execute(*matrix)->toString() << std::endl;
+    GeneticTests tests;
+    tests.testCrossover();
+    tests.testMutation();
+    tests.testPopulation();
 }

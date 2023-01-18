@@ -39,13 +39,13 @@ private:
 
     void sortPopulation(LiteDynamicArray <Member> &population, int low, int high);
 
-    MutationType mutationType = MutationType::Scramble;
+    MutationType mutationType = MutationType::Invert;
     CrossoverType crossoverType = CrossoverType::OX;
     float mutationRate = 0.5;
     float crossoverRate = 0.5;
     size_t stopSize = 1000;
-    size_t populationSize = 200;
-    size_t populationNumber = 10000;
+    size_t populationSize = 300;
+    size_t populationNumber = 3000;
     int eliteSize = 0.5 * populationSize;
     int alphaSize = 0.1 * populationSize;
 };
