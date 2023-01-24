@@ -24,9 +24,9 @@ public:
 
     void setPopulationNumber(size_t populationNumber);
 
-    void setEliteSize(size_t eliteSize);
+    void setEliteSize(float eliteSize);
 
-    void setAlphaSize(size_t alphaSize);
+    void setAlphaSize(float alphaSize);
 
 private:
     void mutate(LiteDynamicArray <size_t> &path);

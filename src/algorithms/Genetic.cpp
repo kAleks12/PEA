@@ -186,10 +186,10 @@ void Genetic::setPopulationNumber(size_t newNumber) {
     this->populationNumber = newNumber;
 }
 
-void Genetic::setEliteSize(size_t newSize) {
-    this->eliteSize = newSize;
+void Genetic::setEliteSize(float newSize) {
+    this->eliteSize = newSize*populationSize;
 }
 
-void Genetic::setAlphaSize(size_t newSize) {
-    this->alphaSize = newSize;
+void Genetic::setAlphaSize(float newSize) {
+    this->alphaSize = newSize*populationSize;
 }

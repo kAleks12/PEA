@@ -12,6 +12,7 @@
 #include "../../inc/utils/testing/MatrixGenerator.h"
 #include "../../inc/algorithms/SimulatedAnnealing.h"
 #include "../../inc/algorithms/TabuSearch.h"
+#include "../../inc/algorithms/Genetic.h"
 
 AdjacencyMatrix *Menu::graph = nullptr;
 
@@ -87,6 +88,7 @@ void Menu::initMenu() {
 
         std::cout << "[0] TSP1\n";
         std::cout << "[1] TSP2\n";
+        std::cout << "[2] TSP3\n";
         std::cout << "Exit program [Q]\n\n";
         std::cout << "Hello, select option: ";
 
@@ -98,6 +100,9 @@ void Menu::initMenu() {
                 break;
             case '1':
                 tsp2Menu();
+                break;
+            case '2':
+                tsp3Menu();
                 break;
             case 'Q':
                 return;
@@ -202,6 +207,46 @@ void Menu::tsp2Menu() {
     }
 }
 
+void Menu::tsp3Menu() {
+//Displaying initial menu with available options
+    char input;
+
+    while (true) {
+        system("cls");
+
+        std::cout << "[0] Read graph\n";
+        std::cout << "[1] Generate random graph\n";
+        std::cout << "[2] Display graph\n";
+        std::cout << "[3] Perform genetic algorithm\n";
+        std::cout << "Exit program [Q]\n\n";
+        std::cout << "Hello, select option: ";
+
+        std::cin >> input;
+
+        switch (input) {
+            case '0':
+                readGraph();
+                break;
+            case '1':
+                generateGraph();
+                break;
+            case '2':
+                displayGraph();
+                break;
+            case '3':
+                runGenetic();
+                break;
+            case 'Q':
+                return;
+            case 'q':
+                return;
+
+            default:
+                break;
+        }
+    }
+}
+
 void Menu::runAlgorithm(Algorithms algorithm) {
     system("cls");
 
@@ -267,4 +312,76 @@ void Menu::runAlgorithm(Algorithms algorithm) {
             system("Pause");
             break;
     }
+}
+
+void Menu::runGenetic() {
+    system("cls");
+
+    if (graph == nullptr) {
+        std::cout << "Please read graph first!\n";
+        system("Pause");
+
+        return;
+    }
+
+
+    float mutationRate;
+    float crossoverRate;
+    float alphaSize;
+    int iterationNumber;
+    int populationSize;
+    double coolingRate;
+
+    std::cout << "Please enter mutation rate: ";
+    std::cin >> mutationRate;
+
+    std::cout << "Please enter crossover rate: ";
+    std::cin >> crossoverRate;
+
+    std::cout << "Please enter alpha size rate: ";
+    std::cin >> alphaSize;
+
+    std::cout << "Please enter iteration number: ";
+    std::cin >> iterationNumber;
+
+    std::cout << "Please enter population number: ";
+    std::cin >> populationSize;
+
+    Genetic genEntity;
+    genEntity.setCrossoverRate(crossoverRate);
+    genEntity.setMutationRate(mutationRate);
+    genEntity.setPopulationSize(populationSize);
+    genEntity.setAlphaSize(alphaSize);
+    genEntity.setPopulationNumber(iterationNumber);
+
+    std::cout << "\n\nPlease choose mutation type:\n";
+    std::cout << "[0] Invert\n";
+    std::cout << "[1] Swap\n";
+    std::cout << "[2] Scramble\n";
+    std::cout << "[3] Insert\n";
+    std::cout << "[other] default\n";
+
+    char input;
+    std::cin >> input;
+
+    switch (input) {
+        case '0':
+            genEntity.setMutationType(Invert);
+            break;
+        case '1':
+            genEntity.setMutationType(Swap);
+            break;
+        case '2':
+            genEntity.setMutationType(Scramble);
+            break;
+        case '3':
+            genEntity.setMutationType(Insert);
+            break;
+
+        default:
+            break;
+    }
+
+    std::cout << genEntity.execute(*graph)->toString() << std::endl;
+    system("Pause");
 }
