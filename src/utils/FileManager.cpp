@@ -64,6 +64,37 @@ void FileManager::readData(const std::string &fileName) {
     srcFile.close();
 }
 
+int FileManager::readGenData(const std::string &fileName) {
+    //Deleting old data
+    delete[] data;
+
+    //Opening source file
+    std::ifstream srcFile(fileName);
+
+    //Checking whether file exists
+    if (!srcFile.is_open()) {
+        return 0;
+    }
+
+    srcFile >> FileManager::verticesNum;
+
+    int bestResult;
+    srcFile >> bestResult;
+
+    FileManager::data = new int[verticesNum * verticesNum];
+    std::string tmp;
+    auto lastIndex = powl(FileManager::verticesNum, 2);
+
+    //Filling the data array with numbers from source file
+    for (int index = 0; index < lastIndex; index++) {
+        srcFile >> tmp;
+        data[index] = std::stoi(tmp);
+    }
+
+    srcFile.close();
+    return bestResult;
+}
+
 void FileManager::saveData(const std::string &path, const std::list<TimeResult> &resultData) {
     std::ofstream saveFile(path);
 
@@ -79,6 +110,16 @@ void FileManager::saveData(const std::string &path, const std::list<ErrorResult>
 
     for (const ErrorResult &result: resultData) {
         saveFile << result.instanceName << ";" << result.avgResult << ";" << result.avgTime << "\n";
+    }
+
+    saveFile.close();
+}
+
+void FileManager::saveData(const std::string &path, const std::list<GeneticResult> &resultData) {
+    std::ofstream saveFile(path);
+
+    for (const GeneticResult &result: resultData) {
+        saveFile << result.instanceName << ";" << result.avgError << ";" << result.avgTime << "\n";
     }
 
     saveFile.close();

@@ -16,4 +16,6 @@ public:
 
     static double getDouble(double low, double high);
     static double getDouble(double high);
+
+    static void generatePair(size_t &firstIndex, size_t &secondIndex, int upperBound);
 };

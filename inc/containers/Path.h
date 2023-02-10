@@ -5,6 +5,7 @@
 #pragma once
 
 #include "DynamicArray.hpp"
+#include "LiteDynamicArray.h"
 #include <string>
 
 class Path {
@@ -14,6 +15,7 @@ class Path {
 
 public:
     Path(const DynamicArray<int> & vertices, int cost);
+    Path(const LiteDynamicArray<size_t> & vertices, size_t cost);
     Path();
     ~Path();
 

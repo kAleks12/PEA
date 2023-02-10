@@ -112,4 +112,16 @@ void AdjacencyMatrix::print() {
     }
 }
 
+size_t AdjacencyMatrix::getPathCost(LiteDynamicArray<size_t> path) const  {
+    int result = 0;
+    int iterationNumber = getCitiesNumber() - 1;
+
+    for (int i = 0; i < iterationNumber; i++) {
+        result += getCost(path[i], path[i + 1]);
+    }
+    result += getCost(path[iterationNumber], path[0]);
+
+    return result;
+}
+
 AdjacencyMatrix::AdjacencyMatrix() = default;

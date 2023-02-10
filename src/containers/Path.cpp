@@ -3,6 +3,7 @@
 //
 
 #include "DynamicArray.tpp"
+#include "LiteDynamicArray.tpp"
 #include "../../inc/containers/Path.h"
 
 Path::Path() {
@@ -14,6 +15,14 @@ Path::Path(const DynamicArray<int> &vertices, int cost) : cost(cost) {
     path = new DynamicArray<int>();
 
     for (int index = 0; index < vertices.getSize(); ++index) {
+        path->addBack(vertices.at(index));
+    }
+}
+
+Path::Path(const LiteDynamicArray<size_t> &vertices, size_t cost) : cost(cost) {
+    path = new DynamicArray<int>();
+
+    for (size_t index = 0; index < vertices.getSize(); ++index) {
         path->addBack(vertices.at(index));
     }
 }

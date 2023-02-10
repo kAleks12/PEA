@@ -7,3 +7,4 @@ tsp_53.txt 6905
 tsp_65.txt 1839
 tsp_70.txt 38673
 tsp_71.txt 1950
+tsp_152.txt 73682
